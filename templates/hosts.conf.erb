@@ -1,0 +1,195 @@
+/*
+ * Host definitions with object attributes
+ * used for apply rules for Service, Notification,
+ * Dependency and ScheduledDowntime objects.
+ *
+ * Tip: Use `icinga2 object list --type Host` to
+ * list all host objects after running
+ * configuration validation (`icinga2 daemon -C`).
+ */
+
+/*
+ * This is an example host based on your
+ * local host's FQDN. Specify the NodeName
+ * constant in `constants.conf` or use your
+ * own description, e.g. "db-host-1".
+ */
+
+object Host NodeName {
+    /* Import the default host template defined in `templates.conf`. */
+    import "generic-host"
+
+    /* Specify the address attributes for checks e.g. `ssh` or `http`. */
+    address = "10.68.23.211"
+    // address6 = "::1"
+
+    vars.host_name = NodeName
+
+    /* Set custom attribute `os` for hostgroup assignment in `groups.conf`. */
+    vars.os = "Linux"
+
+    /* Define disks and attributes for service apply rules in `services.conf`. */
+    vars.disks["disk"] = {
+      /* No parameters. */
+    }
+    vars.disks["disk /"] = {
+      disk_partitions = "/"
+    }
+  
+    vars.external_host = true
+    
+    vars.check_user = true
+
+    /* Define notification mail attributes for notification apply rules in `notifications.conf`. */
+    vars.notification["mail"] = {
+      /* The UserGroup `icingaadmins` is defined in `users.conf`. */
+      groups = [ "icingaadmins" ]
+    }
+}
+
+object Host "phabricator.phabricator.eqiad.wmflabs" {
+    import "generic-host"
+    address = "10.68.20.111"
+    vars.host_name = "phabricator.phabricator.eqiad.wmflabs"
+    vars.os = "Linux"
+    vars.sla = "24x7"
+    vars.external_host = true
+    vars.check_user = true
+
+    vars.notification["mail"] = {
+      /* The UserGroup `icingaadmins` is defined in `users.conf`. */
+      groups = [ "icingaadmins" ]
+    }
+}
+
+object Host "phab-tin.phabricator.eqiad.wmflabs" {
+    import "generic-host"
+    address = "10.68.18.56"
+    name = "phab-tin.phabricator.eqiad.wmflabs"
+    vars.host_name = "phab-tin.phabricator.eqiad.wmflabs"
+    vars.os = "Linux"
+    vars.sla = "24x7"
+    vars.external_host = true
+    vars.check_user = true
+
+    vars.notification["mail"] = {
+      /* The UserGroup `icingaadmins` is defined in `users.conf`. */
+      groups = [ "icingaadmins" ]
+    }
+}
+
+object Host "phab-01.wmflabs.org" {
+     import "generic-host"
+     address = "phab-01.wmflabs.org"
+     vars.os = "Linux OS"
+     vars.sla = "24x7"
+     vars.puppet_check = "disable"
+     vars.disk_check = "disable"
+     vars.load_check = "disable"
+     vars.website_name = "phab-01.wmflabs.org"
+     vars.website_url = "/"
+
+     vars.notification["mail"] = {
+       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
+       groups = [ "icingaadmins" ]
+     }
+}
+
+object Host "gerrit-test.git.eqiad.wmflabs" {
+    import "generic-host"
+    address = "10.68.20.204"
+    vars.os = "Linux"
+    vars.sla = "24x7"
+    name = "gerrit-test.git.eqiad.wmflabs"
+    vars.host_name = "gerrit-test.git.eqiad.wmflabs"
+    vars.external_host = true
+    vars.check_user = true
+
+    vars.notification["mail"] = {
+      /* The UserGroup `icingaadmins` is defined in `users.conf`. */
+      groups = [ "icingaadmins" ]
+    }
+}
+
+object Host "gerrit-test3.git.eqiad.wmflabs" {
+    import "generic-host"
+    address = "10.68.18.23"
+    vars.os = "Linux"
+    vars.sla = "24x7"
+    vars.host_name = "gerrit-test3.git.eqiad.wmflabs"
+    vars.external_host = true
+    vars.check_user = true
+
+    vars.notification["mail"] = {
+      /* The UserGroup `icingaadmins` is defined in `users.conf`. */
+      groups = [ "icingaadmins" ]
+    }
+}
+
+object Host "gerrit.git.wmflabs.org" {
+     import "generic-host"
+     address = "gerrit.git.wmflabs.org"
+     vars.os = "Linux OS"
+     vars.sla = "24x7"
+     vars.puppet_check = "disable"
+     vars.disk_check = "disable"
+     vars.load_check = "disable"
+     vars.website_name = "gerrit.git.wmflabs.org"
+     vars.website_url = "/r/"
+
+     vars.notification["mail"] = {
+       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
+       groups = [ "icingaadmins" ]
+     }
+ }
+
+object Host "gerrit-jenkins.wmflabs.org" {
+     import "generic-host"
+     address = "gerrit-jenkins.wmflabs.org"
+     vars.os = "Linux OS"
+     vars.sla = "24x7"
+     vars.puppet_check = "disable"
+     vars.disk_check = "disable"
+     vars.load_check = "disable"
+     vars.website_name = "gerrit-jenkins.wmflabs.org"
+     vars.website_url = "/"
+
+     vars.notification["mail"] = {
+       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
+       groups = [ "icingaadmins" ]
+     }
+}
+ 
+object Host "jenkins-slave-01.git.eqiad.wmflabs" {
+     import "generic-host"
+     address = "jenkins-slave-01.git.eqiad.wmflabs"
+     vars.os = "Linux"
+     vars.sla = "24x7"
+     vars.external_host = true
+     vars.puppet_check = "enabled"
+     vars.check_user = true
+     vars.host_name = "jenkins-slave-01.git.eqiad.wmflabs"
+
+     vars.notification["mail"] = {
+       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
+       groups = [ "icingaadmins" ]
+     }
+ }
+
+
+object Host "wikistats.wmflabs.org" {
+     import "generic-host"
+     address = "wikistats.wmflabs.org"
+     vars.os = "Linux OS"
+     vars.sla = "24x7"
+     vars.puppet_check = "disable"
+     vars.disk_check = "disable"
+     vars.load_check = "disable"
+     vars.website_name = "wikistats.wmflabs.org"
+     vars.website_url = "/"
+
+     vars.notification["mail"] = {
+       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
+       groups = [ "icingaadmins" ]
+     }
+ }
