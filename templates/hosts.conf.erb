@@ -194,6 +194,15 @@ object Host "wikistats.wmflabs.org" {
      }
 }
 
+object Host "puppet-paladox3.git.eqiad.wmflabs" {
+    import "puppet-paladox3"
+
+    display_name = "Puppet-Paladox"
+    address = "puppet-paladox3.git.eqiad.wmflabs"
+    vars.address = "puppet-paladox3.git.eqiad.wmflabs"
+    vars.check_user = true
+}
+
 object Host "ores-05" {
     import "AI"
 
