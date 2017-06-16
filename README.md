@@ -3,3 +3,7 @@ Icinga2 is a monitoring service for instances hosted by Wikimedia. This Icinga2 
 ## Access
 To access the webui for this instance, click [here](https://gerrit-icinga.wmflabs.org).
 
+# Bugs
+
+Please report bugs, [here](https://phabricator.wikimedia.org/maniphest/task/edit/form/1/?projects=Labs-project-icinga2)
+
