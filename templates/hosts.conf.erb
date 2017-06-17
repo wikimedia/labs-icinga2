@@ -216,7 +216,11 @@ object Host "ores-05" {
     vars.check_disk_ores = true
     vars.check_dist_ores = true
     vars.host = "ores-web-05.ores.eqiad.wmflabs"
-    vars.notifications = "true"
+    /* Define notification mail attributes for notification apply rules in `notifications.conf`. */
+    vars.notification["mail"] = {
+      /* The UserGroup `icingaadmins` is defined in `users.conf`. */
+      groups = [ "icingaadmins" ]
+    }
 }
 
 object Host "Ores-Compute" {
@@ -227,5 +231,24 @@ object Host "Ores-Compute" {
     vars.check_disk = "false"
     vars.check_disk_ores = true
     vars.host = "ores-compute-01.ores.eqiad.wmflabs"
-    vars.notifications = "true"
+    /* Define notification mail attributes for notification apply rules in `notifications.conf`. */
+    vars.notification["mail"] = {
+      /* The UserGroup `icingaadmins` is defined in `users.conf`. */
+      groups = [ "icingaadmins" ]
+    }
+}
+
+object Host "puppet-phabricator.phabricator.eqiad.wmflabs" {
+    import "puppet-paladox3"
+
+    display_name = "puppet-phabricator"
+    address = "puppet-phabricator.phabricator.eqiad.wmflabs"
+    vars.address = "puppet-phabricator.phabricator.eqiad.wmflabs"
+    vars.check_user = true
+    vars.host = "puppet-phabricator.phabricator.eqiad.wmflabs"
+    /* Define notification mail attributes for notification apply rules in `notifications.conf`. */
+    vars.notification["mail"] = {
+      /* The UserGroup `icingaadmins` is defined in `users.conf`. */
+      groups = [ "icingaadmins" ]
+    }
 }
