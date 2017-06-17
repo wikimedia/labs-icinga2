@@ -215,3 +215,13 @@ object Host "ores-05" {
     vars.notifications = "true"
 }
 
+object Host "Ores-Compute" {
+    import "AI"
+
+    address = "ores-compute-01.ores.eqiad.wmflabs"
+    vars.address = "ores-compute-01.ores.eqiad.wmflabs"
+    vars.check_disk = "false"
+    vars.check_disk_ores = true
+    vars.host = "ores-compute-01.ores.eqiad.wmflabs"
+    vars.notifications = "true"
+}
