@@ -80,7 +80,7 @@ apply Service "check disk" {
          assign where host.address != "ores-redis-01.ores.eqiad.wmflabs" && host.address != "ores-web-05.ores.eqiad.wmflabs" && host.address != "ores-compute-01.ores.eqiad.wmflabs" && host.address != "ores-worker-05.ores.eqiad.wmflabs" && host.address != "ores-lb-02.ores.eqiad.wmflabs" && host.vars.disk_check != "disable"
 
  }
- 
+
  apply Service "check disk_space" {
          import "generic-service"
          check_command = "nrpe-check-1arg"
@@ -179,8 +179,7 @@ object Service "gerrit-test3 check gerrit" {
          vars.check = "check_phd"
          vars.host = "phabricator.phabricator.eqiad.wmflabs"
  }
-     
-     
+
 apply Service "apt_get" {
   import "generic-service"
   check_command = "nrpe-check-1arg"
