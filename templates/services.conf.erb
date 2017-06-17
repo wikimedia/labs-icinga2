@@ -151,9 +151,9 @@ apply Service "swap" {
 apply Service "check users" {
   import "generic-service"
 
-         check_command = "nrpe-check-1arg"
-         vars.host = host.address
-         vars.check = "check_users"
+      check_command = "nrpe-check-1arg"
+      vars.host = host.address
+      vars.check = "check_users"
 
   assign where host.vars.check_user
 }
@@ -169,7 +169,7 @@ apply Service "check users" {
 object Service "gerrit-test3 check gerrit" {
          import "generic-service"
          host_name = "gerrit-test3.git.eqiad.wmflabs"
-       check_command = "nrpe-check-1arg"
+         check_command = "nrpe-check-1arg"
          vars.check = "check_gerrit"
          vars.host = "gerrit-test3.git.eqiad.wmflabs"
 }
@@ -177,7 +177,7 @@ object Service "gerrit-test3 check gerrit" {
  object Service "phabricator.phabricator.eqiad.wmflabs check phd" {
          import "generic-service"
          host_name = "phabricator.phabricator.eqiad.wmflabs"
-       check_command = "nrpe-check-1arg"
+         check_command = "nrpe-check-1arg"
          vars.check = "check_phd"
          vars.host = "phabricator.phabricator.eqiad.wmflabs"
  }
@@ -188,8 +188,8 @@ apply Service "apt_get" {
  /* vars.nrpe_command = "nrpe-check-1arg"*/
   vars.host = host.address
   vars.check = "check_apt"
-  check_interval = 4m
-  retry_interval = 2m
+  check_interval = 7m
+  retry_interval = 4m
   assign where host.vars.external_host
 }
 
@@ -199,15 +199,15 @@ apply Service "apt_get_distupgrade" {
   /*vars.nrpe_command = "nrpe-check-1arg"*/
   vars.check = "check_apt_distupgrade"
   vars.host = host.address
-  check_interval = 4m
-  retry_interval = 2m
+  check_interval = 7m
+  retry_interval = 4m
   assign where host.vars.external_host
 }
 
 object Service "gerrit-test.git.eqiad.wmflabs check jenkins" {
          import "generic-service"
          host_name = "gerrit-test.git.eqiad.wmflabs"
-       check_command = "nrpe-check-1arg"
+         check_command = "nrpe-check-1arg"
          vars.check = "check_jenkins"
          vars.host = "gerrit-test.git.eqiad.wmflabs"
 }
