@@ -36,6 +36,8 @@ object Host NodeName {
       disk_partitions = "/"
     }
 
+    vars.remote_client = true
+
     vars.external_host = true
 
     vars.check_user = true
@@ -264,7 +266,6 @@ object Host "Ores-worker-05" {
     import "AI"
 
     address = "ores-worker-05.ores.eqiad.wmflabs"
-    vars.remote_client = true
     vars.os = "Linux"
     vars.sla = "24x7"
     vars.address = "ores-worker-05.ores.eqiad.wmflabs"

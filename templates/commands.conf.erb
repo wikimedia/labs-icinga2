@@ -43,11 +43,11 @@ object CheckCommand "nrpe-check-1arg" {
          arguments = {
          "-H" = "$host$",
          "-c" = "$check$",
-         "-t" = "200"
+         "-t" = "300"
          }
- }
- 
- object CheckCommand "nrpe-check-disk" {
+}
+
+object CheckCommand "nrpe-check-disk" {
          import "plugin-check-command"
 
          command = [ PluginDir + "/check_nrpe" ]
@@ -56,7 +56,7 @@ object CheckCommand "nrpe-check-1arg" {
          "-c" = "check_disk",
          "-a" = "$disk_wfree$ $disk_cfree$ $disk_path$"
          }
- }
+}
 
 object CheckCommand "migration-check-command" {
     import "plugin-check-command"
