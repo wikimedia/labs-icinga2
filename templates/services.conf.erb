@@ -158,7 +158,7 @@ apply Service "check users" {
       assign where host.vars.check_user
 }
 
-object Service "phabricator.phabricator.eqiad.wmflabs check dns" {
+object Service "phabricator check dns" {
       import "generic-service"
       host_name = "phabricator.phabricator.eqiad.wmflabs"
       check_command = "check_dns"
@@ -174,7 +174,7 @@ object Service "gerrit-test3 check gerrit" {
       vars.host = "gerrit-test3.git.eqiad.wmflabs"
 }
 
-object Service "phabricator.phabricator.eqiad.wmflabs check phd" {
+object Service "phabricator check phd" {
       import "generic-service"
       host_name = "phabricator.phabricator.eqiad.wmflabs"
       check_command = "nrpe-check-1arg"
@@ -193,7 +193,7 @@ apply Service "apt_get" {
       assign where host.vars.external_host
 }
 
-object Service "gerrit-test.git.eqiad.wmflabs check jenkins" {
+object Service "gerrit-test check jenkins" {
       import "generic-service"
       host_name = "gerrit-test.git.eqiad.wmflabs"
       check_command = "nrpe-check-1arg"
