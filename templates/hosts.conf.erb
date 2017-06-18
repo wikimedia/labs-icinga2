@@ -26,7 +26,7 @@ object Host NodeName {
     vars.host_name = NodeName
 
     /* Set custom attribute `os` for hostgroup assignment in `groups.conf`. */
-    vars.os = "Linux"
+    vars.os = "Linux OS"
 
     /* Define disks and attributes for service apply rules in `services.conf`. */
     vars.disks["disk"] = {
@@ -53,7 +53,7 @@ object Host "phabricator.phabricator.eqiad.wmflabs" {
     import "generic-host"
     address = "10.68.20.111"
     vars.host_name = "phabricator.phabricator.eqiad.wmflabs"
-    vars.os = "Linux"
+    vars.os = "Linux OS"
     vars.sla = "24x7"
     vars.external_host = true
     vars.check_user = true
@@ -69,7 +69,7 @@ object Host "phab-tin.phabricator.eqiad.wmflabs" {
     address = "10.68.18.56"
     name = "phab-tin.phabricator.eqiad.wmflabs"
     vars.host_name = "phab-tin.phabricator.eqiad.wmflabs"
-    vars.os = "Linux"
+    vars.os = "Linux OS"
     vars.sla = "24x7"
     vars.external_host = true
     vars.check_user = true
@@ -90,6 +90,7 @@ object Host "phab-01.wmflabs.org" {
      vars.load_check = "disable"
      vars.website_name = "phab-01.wmflabs.org"
      vars.website_url = "/"
+     vars.ssh_check = "disable"
 
      vars.notification["mail"] = {
        /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -100,7 +101,7 @@ object Host "phab-01.wmflabs.org" {
 object Host "gerrit-test.git.eqiad.wmflabs" {
     import "generic-host"
     address = "10.68.20.204"
-    vars.os = "Linux"
+    vars.os = "Linux OS"
     vars.sla = "24x7"
     name = "gerrit-test.git.eqiad.wmflabs"
     vars.host_name = "gerrit-test.git.eqiad.wmflabs"
@@ -116,7 +117,7 @@ object Host "gerrit-test.git.eqiad.wmflabs" {
 object Host "gerrit-test3.git.eqiad.wmflabs" {
     import "generic-host"
     address = "10.68.18.23"
-    vars.os = "Linux"
+    vars.os = "Linux OS"
     vars.sla = "24x7"
     vars.host_name = "gerrit-test3.git.eqiad.wmflabs"
     vars.external_host = true
@@ -138,6 +139,7 @@ object Host "gerrit.git.wmflabs.org" {
      vars.load_check = "disable"
      vars.website_name = "gerrit.git.wmflabs.org"
      vars.website_url = "/r/"
+     vars.ssh_check = "disable"
 
      vars.notification["mail"] = {
        /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -155,6 +157,7 @@ object Host "gerrit-jenkins.wmflabs.org" {
      vars.load_check = "disable"
      vars.website_name = "gerrit-jenkins.wmflabs.org"
      vars.website_url = "/"
+     vars.ssh_check = "disable"
 
      vars.notification["mail"] = {
        /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -189,6 +192,7 @@ object Host "wikistats.wmflabs.org" {
      vars.load_check = "disable"
      vars.website_name = "wikistats.wmflabs.org"
      vars.website_url = "/"
+     vars.ssh_check = "disable"
 
      vars.notification["mail"] = {
        /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -295,6 +299,7 @@ object Host "ores.wmflabs.org" {
      vars.website_name = "ores.wmflabs.org"
      vars.website_url = "/"
      vars.notification.ores = true
+     vars.ssh_check = "disable"
 
      vars.notification["mail"] = {
        /* The UserGroup `icingaadmins` is defined in `users.conf`. */

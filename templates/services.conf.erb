@@ -49,7 +49,7 @@ apply Service "ssh" {
 
       check_command = "ssh"
 
-      assign where (host.address || host.address6) && (host.vars.os == "Linux" || host.vars.os == "Linux OS")
+      assign where (host.address || host.address6) && (host.vars.os == "Linux" || host.vars.os == "Linux OS") && host.vars.ssh_check != "disable"
 }
 
 apply Service for (http_vhost => config in host.vars.http_vhosts) {
