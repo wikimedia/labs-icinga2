@@ -211,6 +211,10 @@ object Host "puppet-paladox3.git.eqiad.wmflabs" {
     vars.sla = "24x7"
     vars.external_host = true
     vars.puppet_check = "enabled"
+    vars.notification["mail"] = {
+      /* The UserGroup `icingaadmins` is defined in `users.conf`. */
+      groups = [ "icingaadmins" ]
+    }
 }
 
 object Host "ores-web-05" {
