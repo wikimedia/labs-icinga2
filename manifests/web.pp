@@ -35,7 +35,9 @@ class icinga2::web(
     }
 
     include ::apache
-    include ::apache::mod::php5
+    if os_version('debian == jessie') {
+        include ::apache::mod::php5
+    }
     include ::apache::mod::ssl
     include ::apache::mod::headers
     include ::apache::mod::cgi
@@ -49,9 +51,15 @@ class icinga2::web(
       port  => 80,
     }
 
-    require_package('php5')
-    require_package('php5-dev')
-    require_package('php5-gd')
+    if os_version('debian >= stretch') {
+        require_package('php7.0')
+        require_package('php7.0-dev')
+        require_package('php7.0-gd')
+    } else {
+        require_package('php5')
+        require_package('php5-dev')
+        require_package('php5-gd')
+    }
 
     file { '/etc/icingaweb2':
         ensure => 'directory',
@@ -73,29 +81,29 @@ class icinga2::web(
         owner  => 'www-data',
         group  => 'icingaweb2',
     }
-  
+
     include ::passwords::ldap::wmf_cluster
     $proxypass = $passwords::ldap::wmf_cluster::proxypass
 
     # install the Icinga Apache site
     include ::apache::mod::rewrite
     include ::apache::mod::authnz_ldap
-     include ::apache::mod::rewrite
- 
-     include ::apache::mod::proxy
- 
-     include ::apache::mod::proxy_http
- 
-     include ::apache::mod::headers
+    include ::apache::mod::rewrite
+
+    include ::apache::mod::proxy
+
+    include ::apache::mod::proxy_http
+
+    include ::apache::mod::headers
 
 
-            letsencrypt::cert::integrated { 'gerrit-icinga':
-                 subjects   => 'gerrit-icinga.wmflabs.org',
-                 puppet_svc => 'apache2',
-                 system_svc => 'apache2',
-             }
-    
-        $ssl_settings = ssl_ciphersuite('apache', 'mid', true)
+    letsencrypt::cert::integrated { 'gerrit-icinga':
+         subjects   => 'gerrit-icinga.wmflabs.org',
+         puppet_svc => 'apache2',
+         system_svc => 'apache2',
+    }
+
+    $ssl_settings = ssl_ciphersuite('apache', 'mid', true)
     # letsencrypt::cert::integrated { 'icinga2':
     #    subjects   => hiera('icinga2_apache_host', 'icinga.wmflabs.org'),
     #    puppet_svc => 'apache2',
