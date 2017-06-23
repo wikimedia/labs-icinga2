@@ -18,12 +18,22 @@ class icinga2::web(
 ) {
     include ::icinga2
 
-    apt::repository { 'icingaweb2':
-        uri        => 'http://packages.icinga.com/debian',
-        dist       => 'icinga-jessie',
-        components => 'main',
-        source     => false,
-        keyfile    => 'puppet:///modules/icinga2/icingaweb2.gpg',
+    if os_version('debian >= stretch') {
+        apt::repository { 'icingaweb2':
+            uri        => 'http://packages.icinga.com/debian',
+            dist       => 'icinga-stretch',
+            components => 'main',
+            source     => false,
+            keyfile    => 'puppet:///modules/icinga2/icingaweb2.gpg',
+        }
+    } else {
+        apt::repository { 'icingaweb2':
+            uri        => 'http://packages.icinga.com/debian',
+            dist       => 'icinga-jessie',
+            components => 'main',
+            source     => false,
+            keyfile    => 'puppet:///modules/icinga2/icingaweb2.gpg',
+        }
     }
 
     package { 'icingaweb2':
@@ -97,11 +107,11 @@ class icinga2::web(
     include ::apache::mod::headers
 
 
-    letsencrypt::cert::integrated { 'gerrit-icinga':
-         subjects   => 'gerrit-icinga.wmflabs.org',
-         puppet_svc => 'apache2',
-         system_svc => 'apache2',
-    }
+    #letsencrypt::cert::integrated { 'gerrit-icinga':
+    #     subjects   => 'gerrit-icinga.wmflabs.org',
+    #     puppet_svc => 'apache2',
+    #     system_svc => 'apache2',
+    #}
 
     $ssl_settings = ssl_ciphersuite('apache', 'mid', true)
     # letsencrypt::cert::integrated { 'icinga2':
