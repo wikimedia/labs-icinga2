@@ -108,7 +108,7 @@ class icinga2(
         content => template('mail-host-notification.sh.erb'),
         owner   => 'root',
         group   => 'root',
-        mode    => '0755'
+        mode    => '0755',
         notify  => Base::Service_unit['icinga2'],
     }
 
@@ -117,7 +117,7 @@ class icinga2(
         content => template('mail-service-notification.sh.erb'),
         owner   => 'root',
         group   => 'root',
-        mode    => '0755'
+        mode    => '0755',
         notify  => Base::Service_unit['icinga2'],
     }
 
