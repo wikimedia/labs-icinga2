@@ -55,7 +55,7 @@ class icinga2(
 
     package { 'icinga2-ido-mysql':
         ensure => 'present',
-        require => [ Apt::Repository['icinga2'], Package['icinga2'] ],
+        require => Package['icinga2'],
     }
 
     file { '/etc/icinga2/features-available/ido-mysql.conf':
@@ -63,6 +63,7 @@ class icinga2(
         content => template('icinga2/ido-mysql.erb'),
         owner   => 'root',
         group   => 'root',
+        mode    => '0755',
         require => Package['icinga2-ido-mysql'],
         notify  => Base::Service_unit['icinga2'],
     }
