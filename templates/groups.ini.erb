@@ -1,10 +1,14 @@
-[ad_groups]
-backend             = "ldap"
-resource            = "ad_group"
-user_backend        = "ad_users"
-user_class          = "inetOrgPerson"
-user_name_attribute = "uid"
-group_class         = "groupOfNames"
-group_name_attribute = "cn"
-user_base_dn        = "ou=people,dc=wikimedia,dc=org"
-base_dn             = "ou=groups,dc=wikimedia,dc=org"
+[db]
+resource = "icingaweb_db"
+backend = "db"
+
+# [ad_groups]
+# backend             = "ldap"
+# resource            = "ad_group"
+# user_backend        = "ad_users"
+# user_class          = "inetOrgPerson"
+# user_name_attribute = "uid"
+# group_class         = "groupOfNames"
+# group_name_attribute = "cn"
+# user_base_dn        = "ou=people,dc=wikimedia,dc=org"
+# base_dn             = "ou=groups,dc=wikimedia,dc=org"
