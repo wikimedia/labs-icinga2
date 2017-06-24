@@ -85,6 +85,13 @@ class icinga2::web(
         group  => 'icingaweb2',
     }
 
+    file { '/etc/icingaweb2/groups.ini':
+        ensure => present,
+        content => template('icinga2/groups.ini.erb'),
+        owner  => 'www-data',
+        group  => 'icingaweb2',
+    }
+
     file { '/etc/icingaweb2/resources.ini':
         ensure => present,
         content => template('icinga2/resources.ini.erb'),
