@@ -5,6 +5,7 @@ class icinga2::plugins {
     package { 'nagios-nrpe-plugin':
         ensure => present,
     }
+
     file { '/usr/lib/nagios':
         ensure => directory,
         owner  => 'root',

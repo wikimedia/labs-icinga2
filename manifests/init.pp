@@ -11,7 +11,16 @@
 class icinga2(
     $enable_notifications  = 1,
     $enable_event_handlers = 1,
+    $os = hiera('icinga_apt_dist')
 ) {
+    apt::repository { 'icinga2':
+        uri        => 'http://packages.icinga.com/debian',
+        dist       => $os,
+        components => 'main',
+        source     => false,
+        keyfile    => 'puppet:///modules/icinga2/icinga2.gpg',
+    }
+
     group { 'nagios':
         ensure    => present,
         name      => 'nagios',
@@ -37,6 +46,21 @@ class icinga2(
 
     package { 'icinga2':
         ensure => 'present',
+        require => Apt::Repository['icinga2'],
+    }
+
+    package { 'icinga2-ido-mysql':
+        ensure => 'present',
+        require => [ Apt::Repository['icinga2'], Package['icinga2'] ],
+    }
+
+    file { '/etc/icinga2/features-available/ido-mysql.conf':
+        ensure  => present,
+        content => template('icinga2/ido-mysql.erb'),
+        owner   => 'root',
+        group   => 'root',
+        require => Package['icinga2-ido-mysql'],
+        notify  => Base::Service_unit['icinga2'],
     }
 
     file { '/etc/icinga2/conf.d/commands.conf':

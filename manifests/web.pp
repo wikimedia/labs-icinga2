@@ -14,30 +14,13 @@ class icinga2::web(
     $director_db_host = hiera('director_db_host'),
     $director_db_name = hiera('director_db_name'),
     $director_user_name = hiera('director_user_name'),
-    $director_password = hiera('director_password')
+    $director_password = hiera('director_password'),
 ) {
     include ::icinga2
 
-    if os_version('debian >= stretch') {
-        apt::repository { 'icingaweb2':
-            uri        => 'http://packages.icinga.com/debian',
-            dist       => 'icinga-stretch',
-            components => 'main',
-            source     => false,
-            keyfile    => 'puppet:///modules/icinga2/icingaweb2.gpg',
-        }
-    } else {
-        apt::repository { 'icingaweb2':
-            uri        => 'http://packages.icinga.com/debian',
-            dist       => 'icinga-jessie',
-            components => 'main',
-            source     => false,
-            keyfile    => 'puppet:///modules/icinga2/icingaweb2.gpg',
-        }
-    }
-
     package { 'icingaweb2':
         ensure => present,
+        require => Apt::Repository['icinga2'],
     }
 
     package { 'icinga2-doc':
@@ -63,12 +46,24 @@ class icinga2::web(
 
     if os_version('debian >= stretch') {
         require_package('php7.0')
-        require_package('php7.0-dev')
-        require_package('php7.0-gd')
+        require_package('php-dev')
+        require_package('php-imagick')
+        require_package('php-gd')
+        require_package('php-json')
+        require_package('php-mbstring')
+        require_package('php-common')
+        require_package('php-mysql')
+        require_package('php-ldap')
     } else {
         require_package('php5')
         require_package('php5-dev')
+        require_package('php5-imagick')
         require_package('php5-gd')
+        require_package('php5-json')
+        require_package('php5-mbstring')
+        require_package('php5-common')
+        require_package('php5-mysql')
+        require_package('php5-ldap')
     }
 
     file { '/etc/icingaweb2':
@@ -95,6 +90,27 @@ class icinga2::web(
     file { '/etc/icingaweb2/resources.ini':
         ensure => present,
         content => template('icinga2/resources.ini.erb'),
+        owner  => 'www-data',
+        group  => 'icingaweb2',
+    }
+
+    file { '/etc/icingaweb2/modules/monitoring/backends.ini':
+        ensure => present,
+        content => template('icinga2/backends.ini.erb'),
+        owner  => 'www-data',
+        group  => 'icingaweb2',
+    }
+
+    file { '/etc/icingaweb2/modules/monitoring/commandtransports.ini':
+        ensure => present,
+        content => template('icinga2/commandtransports.ini.erb'),
+        owner  => 'www-data',
+        group  => 'icingaweb2',
+    }
+
+    file { '/etc/icingaweb2/modules/monitoring/roles.ini':
+        ensure => present,
+        content => template('icinga2/roles.ini.erb'),
         owner  => 'www-data',
         group  => 'icingaweb2',
     }
@@ -130,6 +146,10 @@ class icinga2::web(
 
     apache::site { 'gerrit-icinga.wmflabs.org':
         content => template('icinga2/icinga.wmflabs.org.erb'),
+    }
+
+    if os_version('debian >= stretch') {
+        require_package('libapache2-mod-php')
     }
 
     file { '/etc/apache2/conf.d/icinga2.conf':

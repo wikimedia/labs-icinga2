@@ -1,0 +1,13 @@
+/**
+ * The db_ido_mysql library implements IDO functionality
+ * for MySQL.
+ */
+
+library "db_ido_mysql"
+
+object IdoMysqlConnection "ido-mysql" {
+  user = "<%= @icinga_ido_user_name %>",
+  password = "<%= @icinga_ido_password %>",
+  host = "<%= @icinga_ido_db_host %>",
+  database = "<%= @icinga_ido_db_name %>"
+}
