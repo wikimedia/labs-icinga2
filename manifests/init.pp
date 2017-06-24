@@ -11,7 +11,11 @@
 class icinga2(
     $enable_notifications  = 1,
     $enable_event_handlers = 1,
-    $os = hiera('icinga_apt_dist')
+    $icinga_ido_db_host = hiera('icinga_ido_db_host'),
+    $icinga_ido_db_name = hiera('icinga_ido_db_name'),
+    $icinga_ido_user_name = hiera('icinga_ido_user_name'),
+    $icinga_ido_password = hiera('icinga_ido_password'),
+    $os = hiera('icinga_apt_dist'),
 ) {
     apt::repository { 'icinga2':
         uri        => 'http://packages.icinga.com/debian',
