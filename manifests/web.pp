@@ -18,19 +18,13 @@ class icinga2::web(
 ) {
     include ::icinga2
 
-    package { 'icingaweb2':
+    package { [ 'icingaweb2', 'icingaweb2-module-monitoring',
+                'icingaweb2-module-doc', 'icingacli' ] :
         ensure => present,
         require => Apt::Repository['icinga2'],
     }
 
-    package { 'icinga2-doc':
-        ensure => present,
-    }
-
     include ::apache
-    if os_version('debian == jessie') {
-        include ::apache::mod::php5
-    }
     include ::apache::mod::ssl
     include ::apache::mod::headers
     include ::apache::mod::cgi
