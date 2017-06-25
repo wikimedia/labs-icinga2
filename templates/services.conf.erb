@@ -215,3 +215,17 @@ apply Service "puppet" {
 
       assign where host.vars.check_puppet
 }
+
+apply Service "mem-check" {
+      import "generic-service"
+      check_command = "nrpe-check-1arg"
+      vars.host = host.address
+      vars.check = "check_ram"
+      enable_active_checks = true
+      enable_passive_checks = true
+      enable_event_handler = true
+      enable_perfdata = true
+      volatile = true
+
+      assign where host.vars.check_ram
+}

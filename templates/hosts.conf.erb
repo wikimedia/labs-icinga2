@@ -44,6 +44,8 @@ object Host NodeName {
 
     vars.check_puppet = true
 
+    vars.check_ram = true
+
     /* Define notification mail attributes for notification apply rules in `notifications.conf`. */
     vars.notification["mail"] = {
       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -111,6 +113,7 @@ object Host "gerrit-test.git.eqiad.wmflabs" {
     vars.external_host = true
     vars.check_user = true
     vars.check_puppet = true
+    vars.check_ram = true
 
     vars.notification["mail"] = {
       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -177,7 +180,8 @@ object Host "jenkins-slave-01.git.eqiad.wmflabs" {
      vars.puppet_check = "enabled"
      vars.check_user = true
      vars.host_name = "jenkins-slave-01.git.eqiad.wmflabs"
-    vars.check_puppet = true
+     vars.check_puppet = true
+     vars.check_ram = true
 
      vars.notification["mail"] = {
        /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -214,6 +218,7 @@ object Host "puppet-paladox3.git.eqiad.wmflabs" {
     vars.sla = "24x7"
     vars.external_host = true
     vars.check_puppet = true
+     vars.check_ram = true
 
     vars.notification["mail"] = {
       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
