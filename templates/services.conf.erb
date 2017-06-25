@@ -200,3 +200,18 @@ object Service "gerrit-test check jenkins" {
       vars.check = "check_jenkins"
       vars.host = "gerrit-test.git.eqiad.wmflabs"
 }
+
+apply Service "puppet" {
+      import "generic-service"
+
+      check_command = "nrpe-check-1arg"
+      vars.host = host.address
+      vars.check = "check_puppet_checkpuppetrun"
+      enable_active_checks = true
+      enable_passive_checks = true
+      enable_event_handler = true
+      enable_perfdata = true
+      volatile = true
+
+      assign where host.vars.check_puppet
+}

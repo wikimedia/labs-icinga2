@@ -42,6 +42,8 @@ object Host NodeName {
 
     vars.check_user = true
 
+    vars.check_puppet = true
+
     /* Define notification mail attributes for notification apply rules in `notifications.conf`. */
     vars.notification["mail"] = {
       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -57,6 +59,7 @@ object Host "phabricator.phabricator.eqiad.wmflabs" {
     vars.sla = "24x7"
     vars.external_host = true
     vars.check_user = true
+    vars.check_puppet = true
 
     vars.notification["mail"] = {
       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -73,6 +76,7 @@ object Host "phab-tin.phabricator.eqiad.wmflabs" {
     vars.sla = "24x7"
     vars.external_host = true
     vars.check_user = true
+    vars.check_puppet = true
 
     vars.notification["mail"] = {
       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -85,7 +89,6 @@ object Host "phab-01.wmflabs.org" {
      address = "phab-01.wmflabs.org"
      vars.os = "Linux OS"
      vars.sla = "24x7"
-     vars.puppet_check = "disable"
      vars.disk_check = "disable"
      vars.load_check = "disable"
      vars.website_name = "phab-01.wmflabs.org"
@@ -107,6 +110,7 @@ object Host "gerrit-test.git.eqiad.wmflabs" {
     vars.host_name = "gerrit-test.git.eqiad.wmflabs"
     vars.external_host = true
     vars.check_user = true
+    vars.check_puppet = true
 
     vars.notification["mail"] = {
       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -122,6 +126,7 @@ object Host "gerrit-test3.git.eqiad.wmflabs" {
     vars.host_name = "gerrit-test3.git.eqiad.wmflabs"
     vars.external_host = true
     vars.check_user = true
+    vars.check_puppet = true
 
     vars.notification["mail"] = {
       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -134,7 +139,6 @@ object Host "gerrit.git.wmflabs.org" {
      address = "gerrit.git.wmflabs.org"
      vars.os = "Linux OS"
      vars.sla = "24x7"
-     vars.puppet_check = "disable"
      vars.disk_check = "disable"
      vars.load_check = "disable"
      vars.website_name = "gerrit.git.wmflabs.org"
@@ -152,7 +156,6 @@ object Host "gerrit-jenkins.wmflabs.org" {
      address = "gerrit-jenkins.wmflabs.org"
      vars.os = "Linux OS"
      vars.sla = "24x7"
-     vars.puppet_check = "disable"
      vars.disk_check = "disable"
      vars.load_check = "disable"
      vars.website_name = "gerrit-jenkins.wmflabs.org"
@@ -174,6 +177,7 @@ object Host "jenkins-slave-01.git.eqiad.wmflabs" {
      vars.puppet_check = "enabled"
      vars.check_user = true
      vars.host_name = "jenkins-slave-01.git.eqiad.wmflabs"
+    vars.check_puppet = true
 
      vars.notification["mail"] = {
        /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -187,7 +191,6 @@ object Host "wikistats.wmflabs.org" {
      address = "wikistats.wmflabs.org"
      vars.os = "Linux OS"
      vars.sla = "24x7"
-     vars.puppet_check = "disable"
      vars.disk_check = "disable"
      vars.load_check = "disable"
      vars.website_name = "wikistats.wmflabs.org"
@@ -210,7 +213,8 @@ object Host "puppet-paladox3.git.eqiad.wmflabs" {
     vars.os = "Linux OS"
     vars.sla = "24x7"
     vars.external_host = true
-    vars.puppet_check = "enabled"
+    vars.check_puppet = true
+
     vars.notification["mail"] = {
       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
       groups = [ "icingaadmins" ]
@@ -229,6 +233,8 @@ object Host "ores-web-05" {
     vars.check_disk_ores = true
     vars.host = "ores-web-05.ores.eqiad.wmflabs"
     vars.notification.ores = true
+    vars.check_puppet = true
+
     /* Define notification mail attributes for notification apply rules in `notifications.conf`. */
     vars.notification["mail"] = {
       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -248,6 +254,8 @@ object Host "Ores-Compute-01" {
     vars.check_disk_ores = true
     vars.host = "ores-compute-01.ores.eqiad.wmflabs"
     vars.notification.ores = true
+    vars.check_puppet = true
+
     /* Define notification mail attributes for notification apply rules in `notifications.conf`. */
     vars.notification["mail"] = {
       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -265,6 +273,8 @@ object Host "puppet-phabricator.phabricator.eqiad.wmflabs" {
     vars.address = "puppet-phabricator.phabricator.eqiad.wmflabs"
     vars.check_user = true
     vars.host = "puppet-phabricator.phabricator.eqiad.wmflabs"
+    vars.check_puppet = true
+
     /* Define notification mail attributes for notification apply rules in `notifications.conf`. */
     vars.notification["mail"] = {
       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -284,6 +294,8 @@ object Host "ores-worker-05" {
     vars.check_disk_ores = true
     vars.host = "ores-worker-05.ores.eqiad.wmflabs"
     vars.notification.ores = true
+    vars.check_puppet = true
+
     /* Define notification mail attributes for notification apply rules in `notifications.conf`. */
     vars.notification["mail"] = {
       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -297,7 +309,6 @@ object Host "ores.wmflabs.org" {
      address = "ores.wmflabs.org"
      vars.os = "Linux OS"
      vars.sla = "24x7"
-     vars.puppet_check = "disable"
      vars.disk_check = "disable"
      vars.load_check = "disable"
      vars.website_name = "ores.wmflabs.org"
@@ -322,12 +333,13 @@ object Host "ores-lb-02" {
     vars.check_disk = "disable"
     vars.check_disk_ores = true
     vars.host = "ores-lb-02.ores.eqiad.wmflabs"
-    vars.puppet_check = "true"
     vars.notification.ores = true
-     vars.notification["mail"] = {
-       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
-       groups = [ "icingaadmins" ]
-     }
+    vars.check_puppet = true
+
+    vars.notification["mail"] = {
+      /* The UserGroup `icingaadmins` is defined in `users.conf`. */
+      groups = [ "icingaadmins" ]
+    }
 }
 
 object Host "ores-redis-01" {
@@ -342,8 +354,9 @@ object Host "ores-redis-01" {
     vars.check_disk = "disable"
     vars.check_disk_ores = true
     vars.host = "ores-redis-01.ores.eqiad.wmflabs"
-    vars.puppet_check = "true"
     vars.notification.ores = true
+    vars.check_puppet = true
+
     vars.notification["mail"] = {
        /* The UserGroup `icingaadmins` is defined in `users.conf`. */
        groups = [ "icingaadmins" ]
