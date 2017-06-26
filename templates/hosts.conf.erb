@@ -260,6 +260,7 @@ object Host "Ores-Compute-01" {
     vars.host = "ores-compute-01.ores.eqiad.wmflabs"
     vars.notification.ores = true
     vars.check_puppet = true
+    vars.load_check = "disable"
 
     /* Define notification mail attributes for notification apply rules in `notifications.conf`. */
     vars.notification["mail"] = {
