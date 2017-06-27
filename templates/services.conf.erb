@@ -212,8 +212,6 @@ apply Service "puppet" {
       enable_event_handler = true
       enable_perfdata = true
       volatile = true
-      check_interval = 4m
-      retry_interval = 3m
 
       assign where host.vars.check_puppet
 }
