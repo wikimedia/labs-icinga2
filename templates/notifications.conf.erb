@@ -11,8 +11,6 @@
 apply Notification "mail-icingaadmin" to Host {
   import "mail-host-notification"
 
-  interval = 40m
-
   user_groups = ["icingaadmins"] /*host.vars.notification.mail.groups*/
   //users = host.vars.notification.mail.users
 
@@ -31,8 +29,6 @@ apply Notification "mail-icingaadmin" to Host {
 
 apply Notification "mail-icingaadmin" to Service {
   import "mail-service-notification"
-
-  interval = 40m
 
   user_groups = ["icingaadmins"] /*host.vars.notification.mail.groups*/
   //users = host.vars.notification.mail.users
@@ -56,8 +52,6 @@ apply Notification "mail-icingaadmin" to Service {
 apply Notification "ores-mail-icingaadmin" to Host {
   import "ores-mail-host-notification"
 
-  interval = 40m
-
   user_groups = ["icingaadmins"] /*host.vars.notification.mail.groups*/
   //users = host.vars.notification.mail.users
 
@@ -75,8 +69,6 @@ apply Notification "ores-mail-icingaadmin" to Host {
 
 apply Notification "ores-mail-icingaadmin" to Service {
   import "ores-mail-service-notification"
-
-  interval = 40m
 
   user_groups = ["icingaadmins"] /*host.vars.notification.mail.groups*/
   //users = host.vars.notification.mail.users
