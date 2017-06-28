@@ -204,7 +204,6 @@ apply Service "puppet" {
       enable_passive_checks = true
       enable_event_handler = true
       enable_perfdata = true
-      volatile = true
 
       assign where host.vars.check_puppet
 }
@@ -218,7 +217,6 @@ apply Service "mem-check" {
       enable_passive_checks = true
       enable_event_handler = true
       enable_perfdata = true
-      volatile = true
 
       assign where host.vars.check_ram
 }
