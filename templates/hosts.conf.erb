@@ -29,9 +29,9 @@ object Host NodeName {
     vars.os = "Linux OS"
 
     /* Define disks and attributes for service apply rules in `services.conf`. */
-    vars.disks["disk"] = {
+    /* vars.disks["disk"] = { */
       /* No parameters. */
-    }
+    /* } */
     vars.disks["disk /"] = {
       disk_partitions = "/"
     }
@@ -45,6 +45,8 @@ object Host NodeName {
     vars.check_puppet = true
 
     vars.check_ram = true
+
+    vars.check_disk = true
 
     /* Define notification mail attributes for notification apply rules in `notifications.conf`. */
     vars.notification["mail"] = {
@@ -62,6 +64,7 @@ object Host "phabricator.phabricator.eqiad.wmflabs" {
     vars.external_host = true
     vars.check_user = true
     vars.check_puppet = true
+    vars.check_disk = true
 
     vars.notification["mail"] = {
       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -79,6 +82,7 @@ object Host "phab-tin.phabricator.eqiad.wmflabs" {
     vars.external_host = true
     vars.check_user = true
     vars.check_puppet = true
+    vars.check_disk = true
 
     vars.notification["mail"] = {
       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -91,7 +95,6 @@ object Host "phab-01.wmflabs.org" {
      address = "phab-01.wmflabs.org"
      vars.os = "Linux OS"
      vars.sla = "24x7"
-     vars.disk_check = "disable"
      vars.load_check = "disable"
      vars.website_name = "phab-01.wmflabs.org"
      vars.website_url = "/"
@@ -114,6 +117,7 @@ object Host "gerrit-test.git.eqiad.wmflabs" {
     vars.check_user = true
     vars.check_puppet = true
     vars.check_ram = true
+    vars.check_disk = true
 
     vars.notification["mail"] = {
       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -130,6 +134,7 @@ object Host "gerrit-test3.git.eqiad.wmflabs" {
     vars.external_host = true
     vars.check_user = true
     vars.check_puppet = true
+    vars.check_disk = true
 
     vars.notification["mail"] = {
       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -142,7 +147,6 @@ object Host "gerrit.git.wmflabs.org" {
      address = "gerrit.git.wmflabs.org"
      vars.os = "Linux OS"
      vars.sla = "24x7"
-     vars.disk_check = "disable"
      vars.load_check = "disable"
      vars.website_name = "gerrit.git.wmflabs.org"
      vars.website_url = "/r/"
@@ -159,7 +163,6 @@ object Host "gerrit-jenkins.wmflabs.org" {
      address = "gerrit-jenkins.wmflabs.org"
      vars.os = "Linux OS"
      vars.sla = "24x7"
-     vars.disk_check = "disable"
      vars.load_check = "disable"
      vars.website_name = "gerrit-jenkins.wmflabs.org"
      vars.website_url = "/"
@@ -182,6 +185,7 @@ object Host "jenkins-slave-01.git.eqiad.wmflabs" {
      vars.host_name = "jenkins-slave-01.git.eqiad.wmflabs"
      vars.check_puppet = true
      vars.check_ram = true
+     vars.check_disk = true
 
      vars.notification["mail"] = {
        /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -195,7 +199,6 @@ object Host "wikistats.wmflabs.org" {
      address = "wikistats.wmflabs.org"
      vars.os = "Linux OS"
      vars.sla = "24x7"
-     vars.disk_check = "disable"
      vars.load_check = "disable"
      vars.website_name = "wikistats.wmflabs.org"
      vars.website_url = "/"
@@ -218,7 +221,8 @@ object Host "puppet-paladox3.git.eqiad.wmflabs" {
     vars.sla = "24x7"
     vars.external_host = true
     vars.check_puppet = true
-     vars.check_ram = true
+    vars.check_disk = true
+    vars.check_ram = true
 
     vars.notification["mail"] = {
       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
@@ -237,6 +241,7 @@ object Host "puppet-phabricator.phabricator.eqiad.wmflabs" {
     vars.check_user = true
     vars.host = "puppet-phabricator.phabricator.eqiad.wmflabs"
     vars.check_puppet = true
+    vars.check_disk = true
 
     /* Define notification mail attributes for notification apply rules in `notifications.conf`. */
     vars.notification["mail"] = {
@@ -253,7 +258,6 @@ object Host "ores-compute-01" {
     vars.sla = "24x7"
     vars.check_user = true
     vars.address = "ores-compute-01.ores.eqiad.wmflabs"
-    vars.check_disk = "false"
     vars.check_disk_ores = true
     vars.host = "ores-compute-01.ores.eqiad.wmflabs"
     vars.notification.ores = true
@@ -275,7 +279,6 @@ object Host "ores-lb-02" {
     vars.sla = "24x7"
     vars.address = "ores-lb-02.ores.eqiad.wmflabs"
     vars.check_user = true
-    vars.check_disk = "disable"
     vars.check_disk_ores = true
     vars.host = "ores-lb-02.ores.eqiad.wmflabs"
     vars.notification.ores = true
@@ -295,7 +298,6 @@ object Host "ores-redis-01" {
     vars.sla = "24x7"
     vars.check_user = true
     vars.address = "ores-redis-01.ores.eqiad.wmflabs"
-    vars.check_disk = "disable"
     vars.check_disk_ores = true
     vars.host = "ores-redis-01.ores.eqiad.wmflabs"
     vars.notification.ores = true
@@ -316,7 +318,6 @@ object Host "ores-redis-02" {
     vars.sla = "24x7"
     vars.check_user = true
     vars.address = "ores-redis-02.ores.eqiad.wmflabs"
-    vars.check_disk = "disable"
     vars.check_disk_ores = true
     vars.host = "ores-redis-02.ores.eqiad.wmflabs"
     vars.notification.ores = true
@@ -337,7 +338,6 @@ object Host "ores-web-03" {
     vars.sla = "24x7"
     vars.check_user = true
     vars.address = "ores-web-03.ores.eqiad.wmflabs"
-    vars.check_disk = "disable"
     vars.check_disk_ores = true
     vars.host = "ores-web-03.ores.eqiad.wmflabs"
     vars.notification.ores = true
@@ -358,7 +358,6 @@ object Host "ores-web-04" {
     vars.sla = "24x7"
     vars.check_user = true
     vars.address = "ores-web-04.ores.eqiad.wmflabs"
-    vars.check_disk = "disable"
     vars.check_disk_ores = true
     vars.host = "ores-web-04.ores.eqiad.wmflabs"
     vars.notification.ores = true
@@ -379,7 +378,6 @@ object Host "ores-web-05" {
     vars.sla = "24x7"
     vars.check_user = true
     vars.address = "ores-web-05.ores.eqiad.wmflabs"
-    vars.check_disk = "disable"
     vars.check_disk_ores = true
     vars.host = "ores-web-05.ores.eqiad.wmflabs"
     vars.notification.ores = true
@@ -400,7 +398,6 @@ object Host "ores-worker-06" {
     vars.sla = "24x7"
     vars.address = "ores-worker-06.ores.eqiad.wmflabs"
     vars.check_user = true
-    vars.check_disk = "disable"
     vars.check_disk_ores = true
     vars.host = "ores-worker-06.ores.eqiad.wmflabs"
     vars.notification.ores = true
@@ -421,7 +418,6 @@ object Host "ores-worker-07" {
     vars.sla = "24x7"
     vars.address = "ores-worker-07.ores.eqiad.wmflabs"
     vars.check_user = true
-    vars.check_disk = "disable"
     vars.check_disk_ores = true
     vars.host = "ores-worker-07.ores.eqiad.wmflabs"
     vars.notification.ores = true
@@ -442,7 +438,6 @@ object Host "ores-worker-08" {
     vars.sla = "24x7"
     vars.address = "ores-worker-08.ores.eqiad.wmflabs"
     vars.check_user = true
-    vars.check_disk = "disable"
     vars.check_disk_ores = true
     vars.host = "ores-worker-08.ores.eqiad.wmflabs"
     vars.notification.ores = true
@@ -463,7 +458,6 @@ object Host "ores-worker-09" {
     vars.sla = "24x7"
     vars.address = "ores-worker-09.ores.eqiad.wmflabs"
     vars.check_user = true
-    vars.check_disk = "disable"
     vars.check_disk_ores = true
     vars.host = "ores-worker-09.ores.eqiad.wmflabs"
     vars.notification.ores = true
@@ -484,7 +478,6 @@ object Host "ores-worker-10" {
     vars.sla = "24x7"
     vars.address = "ores-worker-10.ores.eqiad.wmflabs"
     vars.check_user = true
-    vars.check_disk = "disable"
     vars.check_disk_ores = true
     vars.host = "ores-worker-10.ores.eqiad.wmflabs"
     vars.notification.ores = true
@@ -505,7 +498,6 @@ object Host "ores-worker-05" {
     vars.sla = "24x7"
     vars.address = "ores-worker-05.ores.eqiad.wmflabs"
     vars.check_user = true
-    vars.check_disk = "disable"
     vars.check_disk_ores = true
     vars.host = "ores-worker-05.ores.eqiad.wmflabs"
     vars.notification.ores = true
@@ -524,7 +516,6 @@ object Host "ores.wmflabs.org" {
      address = "ores.wmflabs.org"
      vars.os = "Linux OS"
      vars.sla = "24x7"
-     vars.disk_check = "disable"
      vars.load_check = "disable"
      vars.website_name = "ores.wmflabs.org"
      vars.website_url = "/"

@@ -77,21 +77,15 @@ apply Service "check disk" {
       vars.host = host.address
       vars.check = "check_disk"
       vars.disk_check = "enabled"
-      assign where host.address != "ores-redis-01.ores.eqiad.wmflabs" && host.address != "ores-web-05.ores.eqiad.wmflabs" && host.address != "ores-compute-01.ores.eqiad.wmflabs" && host.address != "ores-worker-05.ores.eqiad.wmflabs" && host.address != "ores-lb-02.ores.eqiad.wmflabs" && host.vars.disk_check != "disable"
-
- }
+      assign where vars.check
+}
 
 apply Service "check disk_space" {
       import "generic-service"
       check_command = "nrpe-check-1arg"
       vars.host = host.address
       vars.check = "check_disk_space"
-      vars.disk_check_ores = "enabled"
-      assign where host.address == "ores-web-05.ores.eqiad.wmflabs" && host.vars.disk_check_ores != "disable"
-      assign where host.address == "ores-compute-01.ores.eqiad.wmflabs" && host.vars.disk_check_ores != "disable"
-      assign where host.address == "ores-worker-05.ores.eqiad.wmflabs" && host.vars.disk_check_ores != "disable"
-      assign where host.address == "ores-lb-02.ores.eqiad.wmflabs" && host.vars.disk_check_ores != "disable"
-      assign where host.address == "ores-redis-01.ores.eqiad.wmflabs" && host.vars.disk_check_ores != "disable"
+      assign where vars.disk_check_ores
 }
 
 apply Service "check http" {
