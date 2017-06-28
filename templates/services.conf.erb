@@ -76,7 +76,7 @@ apply Service "check disk" {
       check_command = "nrpe-check-1arg"
       vars.host = host.address
       vars.check = "check_disk"
-      assign where vars.check_disk
+      assign where host.vars.check_disk
 }
 
 apply Service "check disk_space" {
@@ -84,7 +84,7 @@ apply Service "check disk_space" {
       check_command = "nrpe-check-1arg"
       vars.host = host.address
       vars.check = "check_disk_space"
-      assign where vars.disk_check_ores
+      assign where host.vars.disk_check_ores
 }
 
 apply Service "check http" {
