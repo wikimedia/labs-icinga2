@@ -25,12 +25,6 @@ class icinga2::web(
     }
 
     include ::apache
-    if os_version('debian == jessie') {
-        include ::apache::mod::php5
-    }
-    if os_version('debian >= stretch') {
-        include ::apache::mod::php7
-    }
     include ::apache::mod::ssl
     include ::apache::mod::headers
     include ::apache::mod::cgi
@@ -146,6 +140,10 @@ class icinga2::web(
 
     apache::site { 'gerrit-icinga.wmflabs.org':
         content => template('icinga2/icinga.wmflabs.org.erb'),
+    }
+
+    if os_version('debian >= stretch') {
+        require_package('libapache2-mod-php')
     }
 
     file { '/etc/apache2/conf.d/icinga2.conf':
