@@ -29,7 +29,7 @@ class icinga2::web(
         include ::apache::mod::php5
     }
     if os_version('debian >= stretch') {
-        include ::apache::mod::php7.0
+        include ::apache::mod::php7
     }
     include ::apache::mod::ssl
     include ::apache::mod::headers
