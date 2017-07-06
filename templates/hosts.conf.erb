@@ -241,6 +241,7 @@ object Host "puppet-phabricator.phabricator.eqiad.wmflabs" {
     vars.host = "puppet-phabricator.phabricator.eqiad.wmflabs"
     vars.check_puppet = true
     vars.check_disk = true
+    vars.external_host = true
 
     /* Define notification mail attributes for notification apply rules in `notifications.conf`. */
     vars.notification["mail"] = {
