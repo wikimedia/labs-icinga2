@@ -7,3 +7,5 @@ To access the webui for this instance, click [here](https://gerrit-icinga.wmflab
 
 Please report bugs, [here](https://phabricator.wikimedia.org/maniphest/task/edit/form/1/?projects=Labs-project-icinga2)
 
+# About Icinga2
+Icinga is a monitoring service used to provide occasional checks on hosts (or servers) to provide statuses on certain services such as free RAM percentages, and etc. The original version of this software can be downloaded [here](https://www.icinga.com/download/)
