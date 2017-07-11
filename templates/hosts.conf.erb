@@ -250,27 +250,6 @@ object Host "puppet-phabricator.phabricator.eqiad.wmflabs" {
     }
 }
 
-object Host "ores-compute-01" {
-    import "generic-host"
-
-    address = "ores-compute-01.ores.eqiad.wmflabs"
-    vars.os = "Linux OS"
-    vars.sla = "24x7"
-    vars.check_user = true
-    vars.address = "ores-compute-01.ores.eqiad.wmflabs"
-    vars.check_disk_ores = true
-    vars.host = "ores-compute-01.ores.eqiad.wmflabs"
-    vars.notification.ores = true
-    vars.check_puppet = true
-    vars.load_check = "disable"
-
-    /* Define notification mail attributes for notification apply rules in `notifications.conf`. */
-    vars.notification["mail"] = {
-      /* The UserGroup `icingaadmins` is defined in `users.conf`. */
-      groups = [ "icingaadmins" ]
-    }
-}
-
 object Host "ores-lb-02" {
     import "generic-host"
 
