@@ -153,4 +153,3 @@ class icinga2::web(
     }
 
 }
-

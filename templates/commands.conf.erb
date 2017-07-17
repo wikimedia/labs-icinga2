@@ -37,32 +37,20 @@ object NotificationCommand "mail-service-notification" {
 }
 
 object CheckCommand "nrpe-check-1arg" {
-         import "plugin-check-command"
+     import "plugin-check-command"
 
-         command = [ PluginDir + "/check_nrpe" ]
-         arguments = {
-         "-H" = "$host$",
-         "-c" = "$check$",
-         "-t" = "300"
-         }
-}
-
-object CheckCommand "nrpe-check-disk" {
-         import "plugin-check-command"
-
-         command = [ PluginDir + "/check_nrpe" ]
-         arguments = {
-         "-H" = "phabricator.phabricator.eqiad.wmflabs",
-         "-c" = "check_disk",
-         "-a" = "$disk_wfree$ $disk_cfree$ $disk_path$"
-         }
+     command = [ PluginDir + "/check_nrpe" ]
+     arguments = {
+       "-H" = "$host$",
+       "-c" = "$check$",
+       "-t" = "300"
+     }
 }
 
 object CheckCommand "migration-check-command" {
     import "plugin-check-command"
     vars.USER1 = PluginDir
 }
-
 
 object CheckCommand "check_dns" {
     import "migration-check-command"
@@ -165,4 +153,3 @@ object NotificationCommand "ores-mail-service-notification" {
 }
 
 /** end **/
-

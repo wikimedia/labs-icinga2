@@ -68,6 +68,14 @@ class icinga2(
         notify  => Base::Service_unit['icinga2'],
     }
 
+    file { '/etc/icinga2/constants.conf':
+        ensure => present,
+        content => template('icinga2/constants.conf.erb'),
+        owner  => 'root',
+        group  => 'root',
+        notify  => Base::Service_unit['icinga2'],
+    }
+
     file { '/etc/icinga2/conf.d/commands.conf':
         ensure => present,
         content => template('icinga2/commands.conf.erb'),
@@ -76,12 +84,20 @@ class icinga2(
         notify  => Base::Service_unit['icinga2'],
     }
 
-    file { '/etc/icinga2/conf.d/groups.conf':
+    file { '/etc/icinga2/conf.d/downtimes.conf':
         ensure => present,
-        source => 'puppet:///modules/icinga2/groups.conf',
+        content => template('icinga2/downtimes.conf.erb'),
         owner  => 'root',
         group  => 'root',
-        notify  => Base::Service_unit['icinga2'],
+        notify => Base::Service_unit['icinga2'],
+    }
+
+    file { '/etc/icinga2/conf.d/groups.conf':
+        ensure => present,
+        content => template('icinga2/groups.conf.erb'),
+        owner  => 'root',
+        group  => 'root',
+        notify => Base::Service_unit['icinga2'],
     }
 
     file { '/etc/icinga2/conf.d/hosts.conf':
@@ -100,6 +116,14 @@ class icinga2(
         notify  => Base::Service_unit['icinga2'],
     }
 
+    file { '/etc/icinga2/conf.d/satellite.conf':
+        ensure => present,
+        content => template('icinga2/satellite.conf.erb'),
+        owner  => 'root',
+        group  => 'root',
+        notify  => Base::Service_unit['icinga2'],
+    }
+
     file { '/etc/icinga2/conf.d/services.conf':
         ensure => present,
         content => template('icinga2/services.conf.erb'),
@@ -110,7 +134,7 @@ class icinga2(
 
     file { '/etc/icinga2/conf.d/templates.conf':
         ensure => present,
-        source => 'puppet:///modules/icinga2/templates.conf',
+        content => template('icinga2/templates.conf.erb'),
         owner  => 'root',
         group  => 'root',
         notify  => Base::Service_unit['icinga2'],

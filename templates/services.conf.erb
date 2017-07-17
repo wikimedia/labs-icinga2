@@ -178,7 +178,6 @@ object Service "phabricator check phd" {
 apply Service "apt_get" {
       import "generic-service"
       check_command = "nrpe-check-1arg"
-      /* vars.nrpe_command = "nrpe-check-1arg"*/
       vars.host = host.address
       vars.check = "check_apt"
       check_interval = 7m
