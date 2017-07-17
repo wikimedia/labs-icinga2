@@ -329,26 +329,6 @@ object Host "ores-web-03" {
     }
 }
 
-object Host "ores-web-04" {
-    import "generic-host"
-
-    address = "ores-web-04.ores.eqiad.wmflabs"
-    vars.os = "Linux OS"
-    vars.sla = "24x7"
-    vars.check_user = true
-    vars.address = "ores-web-04.ores.eqiad.wmflabs"
-    vars.check_disk_ores = true
-    vars.host = "ores-web-04.ores.eqiad.wmflabs"
-    vars.notification.ores = true
-    vars.check_puppet = true
-
-    /* Define notification mail attributes for notification apply rules in `notifications.conf`. */
-    vars.notification["mail"] = {
-      /* The UserGroup `icingaadmins` is defined in `users.conf`. */
-      groups = [ "icingaadmins" ]
-    }
-}
-
 object Host "ores-web-05" {
     import "generic-host"
 
@@ -359,6 +339,26 @@ object Host "ores-web-05" {
     vars.address = "ores-web-05.ores.eqiad.wmflabs"
     vars.check_disk_ores = true
     vars.host = "ores-web-05.ores.eqiad.wmflabs"
+    vars.notification.ores = true
+    vars.check_puppet = true
+
+    /* Define notification mail attributes for notification apply rules in `notifications.conf`. */
+    vars.notification["mail"] = {
+      /* The UserGroup `icingaadmins` is defined in `users.conf`. */
+      groups = [ "icingaadmins" ]
+    }
+}
+
+object Host "ores-worker-05" {
+    import "generic-host"
+
+    address = "ores-worker-05.ores.eqiad.wmflabs"
+    vars.os = "Linux OS"
+    vars.sla = "24x7"
+    vars.address = "ores-worker-05.ores.eqiad.wmflabs"
+    vars.check_user = true
+    vars.check_disk_ores = true
+    vars.host = "ores-worker-05.ores.eqiad.wmflabs"
     vars.notification.ores = true
     vars.check_puppet = true
 
@@ -459,26 +459,6 @@ object Host "ores-worker-10" {
     vars.check_user = true
     vars.check_disk_ores = true
     vars.host = "ores-worker-10.ores.eqiad.wmflabs"
-    vars.notification.ores = true
-    vars.check_puppet = true
-
-    /* Define notification mail attributes for notification apply rules in `notifications.conf`. */
-    vars.notification["mail"] = {
-      /* The UserGroup `icingaadmins` is defined in `users.conf`. */
-      groups = [ "icingaadmins" ]
-    }
-}
-
-object Host "ores-worker-05" {
-    import "generic-host"
-
-    address = "ores-worker-05.ores.eqiad.wmflabs"
-    vars.os = "Linux OS"
-    vars.sla = "24x7"
-    vars.address = "ores-worker-05.ores.eqiad.wmflabs"
-    vars.check_user = true
-    vars.check_disk_ores = true
-    vars.host = "ores-worker-05.ores.eqiad.wmflabs"
     vars.notification.ores = true
     vars.check_puppet = true
 
