@@ -13,8 +13,8 @@
  */
 template Host "generic-host" {
   max_check_attempts = 2
-  check_interval = 60s
-  retry_interval = 40s
+  check_interval = 1m
+  retry_interval = 30s
 
   check_command = "hostalive"
 }
@@ -25,8 +25,8 @@ template Host "generic-host" {
  */
 template Service "generic-service" {
   max_check_attempts = 2
-  check_interval = 60s
-  retry_interval = 40s
+  check_interval = 1m
+  retry_interval = 30s
 }
 
 /**
@@ -53,6 +53,12 @@ template Notification "mail-host-notification" {
             FlappingStart, FlappingEnd,
             DowntimeStart, DowntimeEnd, DowntimeRemoved ]
 
+  vars += {
+    // notification_icingaweb2url = "https://www.example.com/icingaweb2"
+    // notification_from = "Icinga 2 Host Monitoring <icinga@example.com>"
+    notification_logtosyslog = false
+  }
+
   period = "24x7"
 }
 
@@ -70,6 +76,12 @@ template Notification "mail-service-notification" {
   types = [ Problem, Acknowledgement, Recovery, Custom,
             FlappingStart, FlappingEnd,
             DowntimeStart, DowntimeEnd, DowntimeRemoved ]
+
+  vars += {
+    // notification_icingaweb2url = "https://www.example.com/icingaweb2"
+    // notification_from = "Icinga 2 Host Monitoring <icinga@example.com>"
+    notification_logtosyslog = false
+  }
 
   period = "24x7"
 }
@@ -92,6 +104,12 @@ template Notification "ores-mail-host-notification" {
             FlappingStart, FlappingEnd,
             DowntimeStart, DowntimeEnd, DowntimeRemoved ]
 
+  vars += {
+    // notification_icingaweb2url = "https://www.example.com/icingaweb2"
+    // notification_from = "Icinga 2 Host Monitoring <icinga@example.com>"
+    notification_logtosyslog = false
+  }
+
   period = "24x7"
 }
 
@@ -109,6 +127,12 @@ template Notification "ores-mail-service-notification" {
   types = [ Problem, Acknowledgement, Recovery, Custom,
             FlappingStart, FlappingEnd,
             DowntimeStart, DowntimeEnd, DowntimeRemoved ]
+
+  vars += {
+    // notification_icingaweb2url = "https://www.example.com/icingaweb2"
+    // notification_from = "Icinga 2 Host Monitoring <icinga@example.com>"
+    notification_logtosyslog = false
+  }
 
   period = "24x7"
 }

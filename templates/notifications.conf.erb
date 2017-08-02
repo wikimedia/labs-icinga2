@@ -10,18 +10,21 @@
 
 apply Notification "mail-icingaadmin" to Host {
   import "mail-host-notification"
+  user_groups = host.vars.notification.mail.groups
+  users = host.vars.notification.mail.users
 
-  user_groups = ["icingaadmins"] /*host.vars.notification.mail.groups*/
-  //users = host.vars.notification.mail.users
+  /* types = [
+      Acknowledgement,
+      Custom,
+      FlappingEnd,
+      FlappingStart,
+      Problem,
+      Recovery
+  ] */
 
-    /*types = [
-        Acknowledgement,
-        Custom,
-        FlappingEnd,
-        FlappingStart,
-        Problem,
-        Recovery
-    ]*/
+  //interval = 2h
+
+  //vars.notification_logtosyslog = true
 
   assign where host.vars.host
   assign where host.vars.notification.mail
@@ -29,58 +32,66 @@ apply Notification "mail-icingaadmin" to Host {
 
 apply Notification "mail-icingaadmin" to Service {
   import "mail-service-notification"
+  user_groups = host.vars.notification.mail.groups
+  users = host.vars.notification.mail.users
 
-  user_groups = ["icingaadmins"] /*host.vars.notification.mail.groups*/
-  //users = host.vars.notification.mail.users
+  /* types = [
+      Acknowledgement,
+      Custom,
+      FlappingEnd,
+      FlappingStart,
+      Problem,
+      Recovery
+  ] */
 
-    /*types = [
-        Acknowledgement,
-        Custom,
-        FlappingEnd,
-        FlappingStart,
-        Problem,
-        Recovery
-    ]*/
+  //interval = 2h
+
+  //vars.notification_logtosyslog = true
 
   assign where host.vars.host
   assign where host.vars.notification.mail
 }
 
-
 /** ores specific **/
 
 apply Notification "ores-mail-icingaadmin" to Host {
   import "ores-mail-host-notification"
+  user_groups = host.vars.notification.mail.groups
+  users = host.vars.notification.mail.users
 
-  user_groups = ["icingaadmins"] /*host.vars.notification.mail.groups*/
-  //users = host.vars.notification.mail.users
+  /* types = [
+      Acknowledgement,
+      Custom,
+      FlappingEnd,
+      FlappingStart,
+      Problem,
+      Recovery
+  ] */
 
-    /*types = [
-        Acknowledgement,
-        Custom,
-        FlappingEnd,
-        FlappingStart,
-        Problem,
-        Recovery
-    ]*/
+  //interval = 2h
+
+  //vars.notification_logtosyslog = true
 
   assign where host.vars.notification.ores
 }
 
 apply Notification "ores-mail-icingaadmin" to Service {
   import "ores-mail-service-notification"
+  user_groups = host.vars.notification.mail.groups
+  users = host.vars.notification.mail.users
 
-  user_groups = ["icingaadmins"] /*host.vars.notification.mail.groups*/
-  //users = host.vars.notification.mail.users
+  /* types = [
+      Acknowledgement,
+      Custom,
+      FlappingEnd,
+      FlappingStart,
+      Problem,
+      Recovery
+  ] */
 
-    /*types = [
-        Acknowledgement,
-        Custom,
-        FlappingEnd,
-        FlappingStart,
-        Problem,
-        Recovery
-    ]*/
+  //interval = 2h
+
+  //vars.notification_logtosyslog = true
 
   assign where host.vars.notification.ores
 }
