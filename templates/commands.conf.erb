@@ -1,152 +1,355 @@
-#!/usr/bin/env bash
-#
-# Copyright (C) 2012-2017 Icinga Development Team (https://www.icinga.com/)
+/* Command objects */
 
-PROG="`basename $0`"
-HOSTNAME="`hostname`"
-MAILBIN="mail"
+/* Notification Commands
+ *
+ * Please check the documentation for all required and
+ * optional parameters.
+ */
 
-if [ -z "`which $MAILBIN`" ] ; then
-  echo "$MAILBIN not found in \$PATH. Consider installing it."
-  exit 1
-fi
+object NotificationCommand "mail-host-notification" {
+  command = [ SysconfDir + "/icinga2/scripts/mail-host-notification.sh" ]
 
-## Function helpers
-Usage() {
-cat << EOF
+  arguments += {
+    "-4" = {
+      required = true
+      value = "$notification_address$"
+    }
+    "-6" = "$notification_address6$"
+    "-b" = "$notification_author$"
+    "-c" = "$notification_comment$"
+    "-d" = {
+      required = true
+      value = "$notification_date$"
+    }
+    "-f" = {
+      value = "$notification_from$"
+      description = "Set from address. Requires GNU mailutils (Debian/Ubuntu) or mailx (RHEL/SUSE)"
+    }
+    "-i" = "$notification_icingaweb2url$"
+    "-l" = {
+      required = true
+      value = "$notification_hostname$"
+    }
+    "-n" = {
+      required = true
+      value = "$notification_hostdisplayname$"
+    }
+    "-o" = {
+      required = true
+      value = "$notification_hostoutput$"
+    }
+    "-r" = {
+      required = true
+      value = "$notification_useremail$"
+    }
+    "-s" = {
+      required = true
+      value = "$notification_hoststate$"
+    }
+    "-t" = {
+      required = true
+      value = "$notification_type$"
+    }
+    "-v" = "$notification_logtosyslog$"
+  }
 
-Required parameters:
-  -4 HOSTADDRESS (\$address\$)
-  -d LONGDATETIME (\$icinga.long_date_time\$)
-  -l HOSTNAME (\$host.name\$)
-  -n HOSTDISPLAYNAME (\$host.display_name\$)
-  -o HOSTOUTPUT (\$host.output\$)
-  -r USEREMAIL (\$user.email\$)
-  -s HOSTSTATE (\$host.state\$)
-  -t NOTIFICATIONTYPE (\$notification.type\$)
-
-Optional parameters:
-  -6 HOSTADDRESS6 (\$address6\$)
-  -b NOTIFICATIONAUTHORNAME (\$notification.author\$)
-  -c NOTIFICATIONCOMMENT (\$notification.comment\$)
-  -i ICINGAWEB2URL (\$notification_icingaweb2url\$, Default: unset)
-  -f MAILFROM (\$notification_mailfrom\$, requires GNU mailutils (Debian/Ubuntu) or mailx (RHEL/SUSE))
-  -v (\$notification_sendtosyslog\$, Default: false)
-
-EOF
+  vars += {
+    notification_address = "$address$"
+    notification_address6 = "$address6$"
+    notification_author = "$notification.author$"
+    notification_comment = "$notification.comment$"
+    notification_type = "$notification.type$"
+    notification_date = "$icinga.long_date_time$"
+    notification_hostname = "$host.name$"
+    notification_hostdisplayname = "$host.display_name$"
+    notification_hostoutput = "$host.output$"
+    notification_hoststate = "$host.state$"
+    notification_useremail = "$user.email$"
+  }
 }
 
-Help() {
-  Usage;
-  exit 0;
+object NotificationCommand "mail-service-notification" {
+  command = [ SysconfDir + "/icinga2/scripts/mail-service-notification.sh" ]
+
+  arguments += {
+    "-4" = {
+      required = true
+      value = "$notification_address$"
+        }
+    "-6" = "$notification_address6$"
+    "-b" = "$notification_author$"
+    "-c" = "$notification_comment$"
+    "-d" = {
+      required = true
+      value = "$notification_date$"
+    }
+    "-e" = {
+      required = true
+      value = "$notification_servicename$"
+    }
+    "-f" = {
+      value = "$notification_from$"
+      description = "Set from address. Requires GNU mailutils (Debian/Ubuntu) or mailx (RHEL/SUSE)"
+    }
+    "-i" = "$notification_icingaweb2url$"
+    "-l" = {
+      required = true
+      value = "$notification_hostname$"
+    }
+    "-n" = {
+      required = true
+      value = "$notification_hostdisplayname$"
+    }
+    "-o" = {
+      required = true
+      value = "$notification_serviceoutput$"
+    }
+    "-r" = {
+      required = true
+      value = "$notification_useremail$"
+    }
+    "-s" = {
+      required = true
+      value = "$notification_servicestate$"
+    }
+    "-t" = {
+      required = true
+      value = "$notification_type$"
+    }
+    "-u" = {
+      required = true
+      value = "$notification_servicedisplayname$"
+    }
+    "-v" = "$notification_logtosyslog$"
+  }
+
+  vars += {
+    notification_address = "$address$"
+    notification_address6 = "$address6$"
+    notification_author = "$notification.author$"
+    notification_comment = "$notification.comment$"
+    notification_type = "$notification.type$"
+    notification_date = "$icinga.long_date_time$"
+    notification_hostname = "$host.name$"
+    notification_hostdisplayname = "$host.display_name$"
+    notification_servicename = "$service.name$"
+    notification_serviceoutput = "$service.output$"
+    notification_servicestate = "$service.state$"
+    notification_useremail = "$user.email$"
+    notification_servicedisplayname = "$service.display_name$"
+  }
 }
 
-Error() {
-  if [ "$1" ]; then
-    echo $1
-  fi
-  Usage;
-  exit 1;
+object CheckCommand "nrpe-check-1arg" {
+     import "plugin-check-command"
+
+     command = [ PluginDir + "/check_nrpe" ]
+     arguments = {
+       "-H" = "$host$",
+       "-c" = "$check$",
+       "-t" = "300"
+     }
 }
 
-## Main
-while getopts 4:6::b:c:d:f:hi:l:n:o:r:s:t:v: opt
-do
-  case "$opt" in
-    4) HOSTADDRESS=$OPTARG ;; # required
-    6) HOSTADDRESS6=$OPTARG ;;
-    b) NOTIFICATIONAUTHORNAME=$OPTARG ;;
-    c) NOTIFICATIONCOMMENT=$OPTARG ;;
-    d) LONGDATETIME=$OPTARG ;; # required
-    f) MAILFROM=$OPTARG ;;
-    h) Help ;;
-    i) ICINGAWEB2URL=$OPTARG ;;
-    l) HOSTNAME=$OPTARG ;; # required
-    n) HOSTDISPLAYNAME=$OPTARG ;; # required
-    o) HOSTOUTPUT=$OPTARG ;; # required
-    r) USEREMAIL=$OPTARG ;; # required
-    s) HOSTSTATE=$OPTARG ;; # required
-    t) NOTIFICATIONTYPE=$OPTARG ;; # required
-    v) VERBOSE=$OPTARG ;;
-   \?) echo "ERROR: Invalid option -$OPTARG" >&2
-       Error ;;
-    :) echo "Missing option argument for -$OPTARG" >&2
-       Error ;;
-    *) echo "Unimplemented option: -$OPTARG" >&2
-       Error ;;
-  esac
-done
+object CheckCommand "migration-check-command" {
+    import "plugin-check-command"
+    vars.USER1 = PluginDir
+}
 
-shift $((OPTIND - 1))
+object CheckCommand "check_dns" {
+    import "migration-check-command"
+    import "plugin-check-command"
+    command = "$USER1$/check_dns -t 60 -H $host$ -s $address$"
+}
 
-## Check required parameters (TODO: better error message)
-## Keep formatting in sync with mail-service-notification.sh
-if [ ! "$HOSTADDRESS" ] || [ ! "$LONGDATETIME" ] \
-|| [ ! "$HOSTNAME" ] || [ ! "$HOSTDISPLAYNAME" ] \
-|| [ ! "$HOSTOUTPUT" ] || [ ! "$HOSTSTATE" ] \
-|| [ ! "$USEREMAIL" ] || [ ! "$NOTIFICATIONTYPE" ]; then
-  Error "Requirement parameters are missing."
-fi
+object CheckCommand "check_http" {
+    import "migration-check-command"
+    import "plugin-check-command"
+    command = "$USER1$/check_http -H $host$"
+}
 
-## Build the message's subject
-SUBJECT="[$NOTIFICATIONTYPE] Host $HOSTDISPLAYNAME is $HOSTSTATE!"
+object CheckCommand "check_http_2" {
+    import "migration-check-command"
+    import "plugin-check-command"
 
-## Build the notification message
-NOTIFICATION_MESSAGE=`cat << EOF
-***** Icinga 2 Host Monitoring on $HOSTNAME *****
+	command = [ PluginDir + "/check_http" ]
 
-==> $HOSTDISPLAYNAME ($HOSTNAME) is $HOSTSTATE! <==
+	arguments = {
+		"-H" = "$http_vhost$"
+		"-I" = {
+			set_if = "$http_address$"
+		}
+		"-u" = "$http_uri$"
+		"-p" = {
+			set_if = "$http_port$"
+		}
+		"-S" = {
+			set_if = "$http_ssl$"
+		}
+		"-C" = {
+			value = "$http_certificate$"
+			description = "Minimum number of days a certificate has to be valid. This parameter explicitely sets the port to 443 and ignores the URL if passed."
+		}
+		"-f" = {
+			set_if = "$http_onredirect$"
+			description = "How to handle redirect pages"
+		}
+		"-m" = {
+			set_if = "$http_pagesize$"
+			description = "Minim page size required:Maximum page size required"
+		}
+		"-t" = {
+			set_if = "$http_timeout$"
+			description = "Seconds before connection times out"
+		}
+		"-v" = {
+			set_if = "$http_verbose$"
+			description = "Show details for command-line debugging"
+		}
+	}
 
-Info:    $HOSTOUTPUT
+	vars.http_ssl = false
+	vars.http_verbose = false
+}
 
-When:    $LONGDATETIME
-Host:    $HOSTNAME (Display Name: "$HOSTDISPLAYNAME")
-IPv4:    $HOSTADDRESS
-EOF
-`
+object CheckCommand "check_gerrit" {
+    import "migration-check-command"
+    import "plugin-check-command"
+    command = "$USER1$/check_gerrit -H $host$"
+}
 
-## Check whether IPv6 was specified.
-if [ -n "$HOSTADDRESS6" ] ; then
-  NOTIFICATION_MESSAGE="$NOTIFICATION_MESSAGE
-IPv6:	 $HOSTADDRESS6"
-fi
+/** ores **/
 
-## Check whether author and comment was specified.
-if [ -n "$NOTIFICATIONCOMMENT" ] ; then
-  NOTIFICATION_MESSAGE="$NOTIFICATION_MESSAGE
+object NotificationCommand "ores-mail-host-notification" {
+  command = [ SysconfDir + "/icinga2/scripts/ores-mail-host-notification.sh" ]
 
-Comment by $NOTIFICATIONAUTHORNAME:
-  $NOTIFICATIONCOMMENT"
-fi
+  arguments += {
+    "-4" = {
+      required = true
+      value = "$notification_address$"
+    }
+    "-6" = "$notification_address6$"
+    "-b" = "$notification_author$"
+    "-c" = "$notification_comment$"
+    "-d" = {
+      required = true
+      value = "$notification_date$"
+    }
+    "-f" = {
+      value = "$notification_from$"
+      description = "Set from address. Requires GNU mailutils (Debian/Ubuntu) or mailx (RHEL/SUSE)"
+    }
+    "-i" = "$notification_icingaweb2url$"
+    "-l" = {
+      required = true
+      value = "$notification_hostname$"
+    }
+    "-n" = {
+      required = true
+      value = "$notification_hostdisplayname$"
+    }
+    "-o" = {
+      required = true
+      value = "$notification_hostoutput$"
+    }
+    "-r" = {
+      required = true
+      value = "$notification_useremail$"
+    }
+    "-s" = {
+      required = true
+      value = "$notification_hoststate$"
+    }
+    "-t" = {
+      required = true
+      value = "$notification_type$"
+    }
+    "-v" = "$notification_logtosyslog$"
+  }
 
-## Check whether Icinga Web 2 URL was specified.
-if [ -n "$ICINGAWEB2URL" ] ; then
-  NOTIFICATION_MESSAGE="$NOTIFICATION_MESSAGE
+  vars += {
+    notification_address = "$address$"
+    notification_address6 = "$address6$"
+    notification_author = "$notification.author$"
+    notification_comment = "$notification.comment$"
+    notification_type = "$notification.type$"
+    notification_date = "$icinga.long_date_time$"
+    notification_hostname = "$host.name$"
+    notification_hostdisplayname = "$host.display_name$"
+    notification_hostoutput = "$host.output$"
+    notification_hoststate = "$host.state$"
+    notification_useremail = "$user.email$"
+  }
+}
 
-URL:
-  $ICINGAWEB2URL/monitoring/host/show?host=$HOSTNAME"
-fi
+object NotificationCommand "ores-mail-service-notification" {
+  command = [ SysconfDir + "/icinga2/scripts/ores-mail-service-notification.sh" ]
 
-## Check whether verbose mode was enabled and log to syslog.
-if [ "$VERBOSE" == "true" ] ; then
-  logger "$PROG sends $SUBJECT => $USEREMAIL"
-fi
+  arguments += {
+    "-4" = {
+      required = true
+      value = "$notification_address$"
+        }
+    "-6" = "$notification_address6$"
+    "-b" = "$notification_author$"
+    "-c" = "$notification_comment$"
+    "-d" = {
+      required = true
+      value = "$notification_date$"
+    }
+    "-e" = {
+      required = true
+      value = "$notification_servicename$"
+    }
+    "-f" = {
+      value = "$notification_from$"
+      description = "Set from address. Requires GNU mailutils (Debian/Ubuntu) or mailx (RHEL/SUSE)"
+    }
+    "-i" = "$notification_icingaweb2url$"
+    "-l" = {
+      required = true
+      value = "$notification_hostname$"
+    }
+    "-n" = {
+      required = true
+      value = "$notification_hostdisplayname$"
+    }
+    "-o" = {
+      required = true
+      value = "$notification_serviceoutput$"
+    }
+    "-r" = {
+      required = true
+      value = "$notification_useremail$"
+    }
+    "-s" = {
+      required = true
+      value = "$notification_servicestate$"
+    }
+    "-t" = {
+      required = true
+      value = "$notification_type$"
+    }
+    "-u" = {
+      required = true
+      value = "$notification_servicedisplayname$"
+    }
+    "-v" = "$notification_logtosyslog$"
+  }
 
-## Send the mail using the $MAILBIN command.
-## If an explicit sender was specified, try to set it.
-##if [ -n "$MAILFROM" ] ; then
-
-  ## Modify this for your own needs!
-
-  ## Debian/Ubuntu use mailutils which requires `-a` to append the header
-  ## if [ -f /etc/debian_version ]; then
-    /usr/bin/printf "%b" "$NOTIFICATION_MESSAGE" | $MAILBIN -a "From: $MAILFROM" -s "$SUBJECT" $USEREMAIL
-  ## Other distributions (RHEL/SUSE/etc.) prefer mailx which sets a sender address with `-r`
-  ## else
-    /usr/bin/printf "%b" "$NOTIFICATION_MESSAGE" | $MAILBIN -r "$MAILFROM" -s "$SUBJECT" $USEREMAIL
-  ##fi
-
-##else
-##  /usr/bin/printf "%b" "$NOTIFICATION_MESSAGE" \
-##  | $MAILBIN -s "$SUBJECT" $USEREMAIL
-##fi
+  vars += {
+    notification_address = "$address$"
+    notification_address6 = "$address6$"
+    notification_author = "$notification.author$"
+    notification_comment = "$notification.comment$"
+    notification_type = "$notification.type$"
+    notification_date = "$icinga.long_date_time$"
+    notification_hostname = "$host.name$"
+    notification_hostdisplayname = "$host.display_name$"
+    notification_servicename = "$service.name$"
+    notification_serviceoutput = "$service.output$"
+    notification_servicestate = "$service.state$"
+    notification_useremail = "$user.email$"
+    notification_servicedisplayname = "$service.display_name$"
+  }
+}
