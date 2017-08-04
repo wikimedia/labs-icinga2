@@ -76,6 +76,14 @@ class icinga2(
         notify  => Base::Service_unit['icinga2'],
     }
 
+    file { '/etc/icinga2/conf.d/apt.conf':
+        ensure => present,
+        content => template('icinga2/apt.conf.erb'),
+        owner  => 'root',
+        group  => 'root',
+        notify  => Base::Service_unit['icinga2'],
+    }
+
     file { '/etc/icinga2/conf.d/commands.conf':
         ensure => present,
         content => template('icinga2/commands.conf.erb'),
