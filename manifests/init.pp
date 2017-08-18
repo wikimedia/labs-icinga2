@@ -223,9 +223,8 @@ class icinga2(
 
     base::service_unit { 'icinga2':
         ensure         => 'present',
-        systemd        => true,
-        upstart        => false,
-        sysvinit       => true,
+        systemd        => systemd_template('icinga2'),
+        sysvinit       => sysvinit_template('icinga2'),
         service_params => {
             ensure     => 'running',
             provider   => $::initsystem,
