@@ -101,7 +101,7 @@ class icinga2::web(
         group  => 'icingaweb2',
     }
 
-    file { '/etc/icingaweb2/modules/director/config.ini':
+    file { '/etc/icingaweb2/modules/director':
         ensure => 'directory',
         owner  => 'www-data',
         group  => 'icingaweb2',
@@ -112,7 +112,7 @@ class icinga2::web(
         content => template('icinga2/config.ini.erb'),
         owner  => 'www-data',
         group  => 'icingaweb2',
-        require => File['/etc/icingaweb2/modules/director/config.ini'],
+        require => File['/etc/icingaweb2/modules/director'],
     }
 
     file { '/etc/icingaweb2/modules/director/kickstart.ini':
@@ -120,7 +120,7 @@ class icinga2::web(
         content => template('icinga2/kickstart.ini.erb'),
         owner  => 'www-data',
         group  => 'icingaweb2',
-        require => File['/etc/icingaweb2/modules/director/config.ini'],
+        require => File['/etc/icingaweb2/modules/director'],
     }
 
     file { '/etc/icingaweb2/modules/monitoring/backends.ini':
