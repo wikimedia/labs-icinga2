@@ -20,8 +20,7 @@ class icinga2::web(
     include ::icinga2
 
     package { [ 'icingaweb2', 'icingaweb2-module-monitoring',
-                'icingaweb2-module-doc', 'icingaweb2-module-director',
-                'icingacli' ] :
+                'icingaweb2-module-doc', 'icingacli' ] :
         ensure => present,
         require => Apt::Repository['icinga2'],
     }
@@ -103,10 +102,17 @@ class icinga2::web(
     }
 
     file { '/etc/icingaweb2/modules/director/config.ini':
+        ensure => 'directory',
+        owner  => 'www-data',
+        group  => 'icingaweb2',
+    }
+
+    file { '/etc/icingaweb2/modules/director/config.ini':
         ensure => present,
         content => template('icinga2/config.ini.erb'),
         owner  => 'www-data',
         group  => 'icingaweb2',
+        require => File['/etc/icingaweb2/modules/director/config.ini'],
     }
 
     file { '/etc/icingaweb2/modules/director/kickstart.ini':
@@ -114,6 +120,7 @@ class icinga2::web(
         content => template('icinga2/kickstart.ini.erb'),
         owner  => 'www-data',
         group  => 'icingaweb2',
+        require => File['/etc/icingaweb2/modules/director/config.ini'],
     }
 
     file { '/etc/icingaweb2/modules/monitoring/backends.ini':
@@ -136,6 +143,15 @@ class icinga2::web(
         owner  => 'www-data',
         group  => 'icingaweb2',
     }
+
+    #git::clone { 'beta-mediawiki-core':
+    #    directory => "${stage_dir}/php-master",
+    #    origin    => 'https://gerrit.wikimedia.org/r/p/mediawiki/core.git',
+    #    branch    => 'master',
+    #    owner     => 'root',
+    #    group     => 'root',
+    #    require   => Package['icingaweb2'],
+    #}
 
     # install the Icinga Apache site
     include ::apache::mod::rewrite
