@@ -15,22 +15,27 @@ class icinga2::web(
     $director_db_name = hiera('director_db_name'),
     $director_user_name = hiera('director_user_name'),
     $director_password = hiera('director_password'),
+    $icinga_api_password = hiera('icinga_api_password'),
 ) {
     include ::icinga2
 
     package { [ 'icingaweb2', 'icingaweb2-module-monitoring',
-                'icingaweb2-module-doc', 'icingacli' ] :
+                'icingaweb2-module-doc', 'icingaweb2-module-director',
+                'icingacli' ] :
         ensure => present,
         require => Apt::Repository['icinga2'],
     }
 
     include ::apache
+
     if os_version('debian == jessie') {
         include ::apache::mod::php5
     }
+
     if os_version('debian >= stretch') {
         include ::apache::mod::php7
     }
+
     include ::apache::mod::ssl
     include ::apache::mod::headers
     include ::apache::mod::cgi
@@ -39,6 +44,7 @@ class icinga2::web(
       proto => 'tcp',
       port  => 443,
     }
+
     ferm::service { 'icinga2-http':
       proto => 'tcp',
       port  => 80,
@@ -47,6 +53,7 @@ class icinga2::web(
     if os_version('debian >= stretch') {
         require_package('php7.0')
         require_package('php-dev')
+        require_package('php-curl')
         require_package('php-imagick')
         require_package('php-gd')
         require_package('php-json')
@@ -56,6 +63,7 @@ class icinga2::web(
         require_package('php-ldap')
     } else {
         require_package('php5')
+        require_package('php5-curl')
         require_package('php5-dev')
         require_package('php5-imagick')
         require_package('php5-gd')
@@ -94,6 +102,20 @@ class icinga2::web(
         group  => 'icingaweb2',
     }
 
+    file { '/etc/icingaweb2/modules/director/config.ini':
+        ensure => present,
+        content => template('icinga2/config.ini.erb'),
+        owner  => 'www-data',
+        group  => 'icingaweb2',
+    }
+
+    file { '/etc/icingaweb2/modules/director/kickstart.ini':
+        ensure => present,
+        content => template('icinga2/kickstart.ini.erb'),
+        owner  => 'www-data',
+        group  => 'icingaweb2',
+    }
+
     file { '/etc/icingaweb2/modules/monitoring/backends.ini':
         ensure => present,
         content => template('icinga2/backends.ini.erb'),
@@ -114,9 +136,6 @@ class icinga2::web(
         owner  => 'www-data',
         group  => 'icingaweb2',
     }
-
-    include ::passwords::ldap::wmf_cluster
-    $proxypass = $passwords::ldap::wmf_cluster::proxypass
 
     # install the Icinga Apache site
     include ::apache::mod::rewrite
@@ -145,11 +164,6 @@ class icinga2::web(
     #}
 
     apache::site { 'gerrit-icinga.wmflabs.org':
-        content => template('icinga2/icinga.wmflabs.org.erb'),
+        content => template('icinga2/gerrit-icinga.wmflabs.org.erb'),
     }
-
-    file { '/etc/apache2/conf.d/icinga2.conf':
-        ensure => absent,
-    }
-
 }

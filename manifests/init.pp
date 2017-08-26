@@ -16,6 +16,7 @@ class icinga2(
     $icinga_ido_user_name = hiera('icinga_ido_user_name'),
     $icinga_ido_password = hiera('icinga_ido_password'),
     $os = hiera('icinga_apt_dist'),
+    $icinga_api_password = hiera('icinga_api_password'),
 ) {
     apt::repository { 'icinga2':
         uri        => 'http://packages.icinga.com/debian',
@@ -69,82 +70,98 @@ class icinga2(
     }
 
     file { '/etc/icinga2/constants.conf':
-        ensure => present,
+        ensure  => present,
         content => template('icinga2/constants.conf.erb'),
-        owner  => 'root',
-        group  => 'root',
+        owner   => 'root',
+        group   => 'root',
+        notify  => Base::Service_unit['icinga2'],
+    }
+
+    file { '/etc/icinga2/zones.conf':
+        ensure  => present,
+        content => template('icinga2/zones.conf.erb'),
+        owner   => 'root',
+        group   => 'root',
+        notify  => Base::Service_unit['icinga2'],
+    }
+
+    file { '/etc/icinga2/conf.d/api-users.conf':
+        ensure  => present,
+        content => template('icinga2/api-users.conf.erb'),
+        owner   => 'root',
+        group   => 'root',
         notify  => Base::Service_unit['icinga2'],
     }
 
     file { '/etc/icinga2/conf.d/apt.conf':
-        ensure => present,
+        ensure  => present,
         content => template('icinga2/apt.conf.erb'),
-        owner  => 'root',
-        group  => 'root',
+        owner   => 'root',
+        group   => 'root',
         notify  => Base::Service_unit['icinga2'],
     }
 
     file { '/etc/icinga2/conf.d/commands.conf':
-        ensure => present,
+        ensure  => present,
         content => template('icinga2/commands.conf.erb'),
-        owner  => 'root',
-        group  => 'root',
+        owner   => 'root',
+        group   => 'root',
         notify  => Base::Service_unit['icinga2'],
     }
 
     file { '/etc/icinga2/conf.d/downtimes.conf':
-        ensure => present,
+        ensure  => present,
         content => template('icinga2/downtimes.conf.erb'),
-        owner  => 'root',
-        group  => 'root',
-        notify => Base::Service_unit['icinga2'],
+        owner   => 'root',
+        group   => 'root',
+        notify  => Base::Service_unit['icinga2'],
     }
 
     file { '/etc/icinga2/conf.d/groups.conf':
-        ensure => present,
+        ensure  => present,
         content => template('icinga2/groups.conf.erb'),
-        owner  => 'root',
-        group  => 'root',
-        notify => Base::Service_unit['icinga2'],
+        owner   => 'root',
+        group   => 'root',
+        notify  => Base::Service_unit['icinga2'],
     }
 
     file { '/etc/icinga2/conf.d/hosts.conf':
-        ensure => present,
+        ensure  => present,
         content => template('icinga2/hosts.conf.erb'),
-        owner  => 'root',
-        group  => 'root',
+        owner   => 'root',
+        group   => 'root',
         notify  => Base::Service_unit['icinga2'],
     }
 
     file { '/etc/icinga2/conf.d/notifications.conf':
-        ensure => present,
+        ensure  => present,
         content => template('icinga2/notifications.conf.erb'),
-        owner  => 'root',
-        group  => 'root',
+        owner   => 'root',
+        group   => 'root',
         notify  => Base::Service_unit['icinga2'],
     }
 
     file { '/etc/icinga2/conf.d/satellite.conf':
-        ensure => present,
+        ensure  => present,
         content => template('icinga2/satellite.conf.erb'),
-        owner  => 'root',
-        group  => 'root',
+        owner   => 'root',
+        group   => 'root',
         notify  => Base::Service_unit['icinga2'],
     }
 
     file { '/etc/icinga2/conf.d/services.conf':
-        ensure => present,
+        ensure  => present,
         content => template('icinga2/services.conf.erb'),
-        owner  => 'root',
-        group  => 'root',
+        owner   => 'root',
+        group   => 'root',
         notify  => Base::Service_unit['icinga2'],
     }
 
     file { '/etc/icinga2/conf.d/templates.conf':
-        ensure => present,
+        ensure  => present,
         content => template('icinga2/templates.conf.erb'),
-        owner  => 'root',
-        group  => 'root',
+        owner   => 'root',
+        group   => 'root',
         notify  => Base::Service_unit['icinga2'],
     }
 
@@ -153,7 +170,7 @@ class icinga2(
         source => 'puppet:///modules/icinga2/timeperiods.conf',
         owner  => 'root',
         group  => 'root',
-        notify  => Base::Service_unit['icinga2'],
+        notify => Base::Service_unit['icinga2'],
     }
 
     file { '/etc/icinga2/conf.d/users.conf':
@@ -161,7 +178,7 @@ class icinga2(
         source => 'puppet:///modules/icinga2/users.conf',
         owner  => 'root',
         group  => 'root',
-        notify  => Base::Service_unit['icinga2'],
+        notify => Base::Service_unit['icinga2'],
     }
 
     file { '/etc/icinga2/scripts/mail-host-notification.sh':
@@ -259,10 +276,4 @@ class icinga2(
         group  => 'www-data',
         mode   => '2755',
     }
-
-    # Purge unmanaged nagios_host and nagios_services resources
-    # This will only happen for non exported resources, that is resources that
-    # are declared by the icinga host itself
-    resources { 'nagios_host': purge => true, }
-    resources { 'nagios_service': purge => true, }
 }
