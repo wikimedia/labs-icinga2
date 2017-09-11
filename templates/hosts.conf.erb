@@ -142,6 +142,7 @@ object Host "gerrit-test3.git.eqiad.wmflabs" {
     }
 }
 
+/* can be re enabled once it works with letsencrypt
 object Host "gerrit.git.wmflabs.org" {
      import "generic-host"
      address = "gerrit.git.wmflabs.org"
@@ -156,7 +157,23 @@ object Host "gerrit.git.wmflabs.org" {
        /* The UserGroup `icingaadmins` is defined in `users.conf`. */
        groups = [ "icingaadmins" ]
      }
- }
+}*/
+
+object Host "gerrit2.git.wmflabs.org" {
+     import "generic-host"
+     address = "gerrit2.git.wmflabs.org"
+     vars.os = "Linux OS"
+     vars.sla = "24x7"
+     vars.load_check = "disable"
+     vars.website_name = "gerrit2.git.wmflabs.org"
+     vars.website_url = "/r/"
+     vars.ssh_check = "disable"
+
+     vars.notification["mail"] = {
+       /* The UserGroup `icingaadmins` is defined in `users.conf`. */
+       groups = [ "icingaadmins" ]
+     }
+}
 
 object Host "gerrit-jenkins.wmflabs.org" {
      import "generic-host"
