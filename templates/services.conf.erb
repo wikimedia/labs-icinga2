@@ -172,8 +172,8 @@ apply Service "apt_get" {
       check_command = "nrpe-check-1arg"
       vars.host = host.address
       vars.check = "check_apt"
-      check_interval = 7m
-      retry_interval = 4m
+      check_interval = 10m
+      retry_interval = 5m
       assign where host.vars.external_host
 }
 
