@@ -90,13 +90,13 @@ object Host "phab-tin.phabricator.eqiad.wmflabs" {
     }
 }
 
-object Host "phab-01.wmflabs.org" {
+object Host "phab.wmflabs.org" {
      import "generic-host"
-     address = "phab-01.wmflabs.org"
+     address = "phab.wmflabs.org"
      vars.os = "Linux OS"
      vars.sla = "24x7"
      vars.load_check = "disable"
-     vars.website_name = "phab-01.wmflabs.org"
+     vars.website_name = "phab.wmflabs.org"
      vars.website_url = "/"
      vars.ssh_check = "disable"
 
