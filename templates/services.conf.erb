@@ -54,10 +54,9 @@ apply Service "ssh" {
 
 apply Service "check gerrit ssh" {
       import "generic-service"
-      check_command = "nrpe-check-1arg"
       vars.port = host.vars.ssh_port
       vars.host = host.vars.address_ip
-      vars.check = "check_ssh"
+      vars.check = "ssh"
       assign where host.address == "gerrit-test3.git.eqiad.wmflabs"
 }
 
