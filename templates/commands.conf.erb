@@ -156,6 +156,12 @@ object CheckCommand "check_dns" {
     command = "$USER1$/check_dns -t 60 -H $host$ -s $address$"
 }
 
+object CheckCommand "check_ssh_port" {
+    import "migration-check-command"
+    import "plugin-check-command"
+    command = "$USER1$/check_ssh -p $port $host.address_ip$"
+}
+
 object CheckCommand "check_http" {
     import "migration-check-command"
     import "plugin-check-command"
