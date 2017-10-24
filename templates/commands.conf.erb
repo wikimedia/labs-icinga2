@@ -159,7 +159,7 @@ object CheckCommand "check_dns" {
 object CheckCommand "check_ssh_port" {
     import "migration-check-command"
     import "plugin-check-command"
-    command = "$USER1$/check_ssh -p $port$ $host.address_ip$"
+    command = "$USER1$/check_ssh -p $port$ $address$"
 }
 
 object CheckCommand "check_http" {
