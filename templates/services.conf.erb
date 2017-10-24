@@ -58,7 +58,7 @@ apply Service "check gerrit ssh" {
       vars.port = host.vars.ssh_port
       vars.host = host.vars.address_ip
       vars.check = "check_ssh"
-      assign where host.address === "gerrit-test3.git.eqiad.wmflabs"
+      assign where host.address == "gerrit-test3.git.eqiad.wmflabs"
 }
 
 apply Service for (http_vhost => config in host.vars.http_vhosts) {
