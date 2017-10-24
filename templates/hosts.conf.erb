@@ -128,6 +128,9 @@ object Host "gerrit-test.git.eqiad.wmflabs" {
 object Host "gerrit-test3.git.eqiad.wmflabs" {
     import "generic-host"
     address = "gerrit-test3.git.eqiad.wmflabs"
+    // floating ip
+    vars.ssh_port = "29418"
+    vars.address_ip = "208.80.155.149"
     vars.os = "Linux OS"
     vars.sla = "24x7"
     vars.host_name = "gerrit-test3.git.eqiad.wmflabs"
