@@ -232,6 +232,12 @@ class icinga2(
         group  => 'nagios',
     }
 
+    file { '/var/lib/icinga2/certs':
+        ensure => directory,
+        owner  => 'nagios',
+        group  => 'nagios',
+    }
+
     file { '/var/run/icinga2/':
         ensure => directory,
         owner  => 'nagios',
