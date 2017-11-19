@@ -85,14 +85,6 @@ class icinga2(
         notify  => Base::Service_unit['icinga2'],
     }
 
-    file { '/etc/icinga2/conf.d/api.conf':
-        ensure  => present,
-        content => template('icinga2/api.conf.erb'),
-        owner   => 'root',
-        group   => 'root',
-        notify  => Base::Service_unit['icinga2'],
-    }
-
     file { '/etc/icinga2/conf.d/api-users.conf':
         ensure  => present,
         content => template('icinga2/api-users.conf.erb'),
