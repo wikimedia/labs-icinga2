@@ -216,6 +216,8 @@ apply Service "mem-check" {
       enable_passive_checks = true
       enable_event_handler = true
       enable_perfdata = true
+      check_interval = 10m
+      retry_interval = 5m
 
       assign where host.vars.check_ram
 }
