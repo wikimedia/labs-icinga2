@@ -292,26 +292,6 @@ object Host "ORES-web01.Experimental" {
     }
 }
 
-object Host "ORES-lb02.Experimental" {
-    import "generic-host"
-
-    display_name = "ORES-lb02.Experimental"
-    address = "ores-lb-02.ores.eqiad.wmflabs"
-    vars.os = "Linux OS"
-    vars.sla = "24x7"
-    vars.address = "ores-lb-02.ores.eqiad.wmflabs"
-    vars.check_user = true
-    vars.check_disk = true
-    vars.host = "ores-lb-02.ores.eqiad.wmflabs"
-    vars.notification.ores = true
-    vars.check_puppet = true
-
-    vars.notification["mail"] = {
-      /* The UserGroup `icingaadmins` is defined in `users.conf`. */
-      groups = [ "icingaadmins" ]
-    }
-}
-
 object Host "ORES-redis02.experimental" {
     import "generic-host"
 
