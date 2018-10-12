@@ -1,16 +1,26 @@
 [Unit]
 Description=Icinga host/service/network monitoring system
-After=postgresql.service mariadb.service carbon-cache.service mysql.service syslog.target network.target
+After=syslog.target network-online.target postgresql.service mariadb.service carbon-cache.service carbon-relay.service
 
 [Service]
-Type=simple
-UMask=0007
-EnvironmentFile=/usr/lib/icinga2/icinga2
+Type=notify
 EnvironmentFile=/etc/default/icinga2
-ExecStartPre=/usr/lib/icinga2/prepare-dirs /usr/lib/icinga2/icinga2
-ExecStart=/usr/sbin/icinga2 daemon -e ${ICINGA2_ERROR_LOG}
-ExecReload=/usr/lib/icinga2/safe-reload /usr/lib/icinga2/icinga2
+ExecStartPre=/usr/lib/icinga2/prepare-dirs /etc/default/icinga2
+ExecStart=/usr/sbin/icinga2 daemon --close-stdio -e ${ICINGA2_ERROR_LOG}
 PIDFile=/run/icinga2/icinga2.pid
+ExecReload=/usr/lib/icinga2/safe-reload /etc/default/icinga2
+TimeoutStartSec=30m
+
+# Systemd >228 enforces a lower process number for services.
+# Depending on the distribution and Systemd version, this must
+# be explicitly raised. Packages will set the needed values
+# into /etc/systemd/system/icinga2.service.d/limits.conf
+#
+# Please check the troubleshooting documentation for further details.
+# The values below can be used as examples for customized service files.
+
+#TasksMax=infinity
+#LimitNPROC=62883
 
 [Install]
 WantedBy=multi-user.target
