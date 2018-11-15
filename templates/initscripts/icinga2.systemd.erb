@@ -4,6 +4,7 @@ After=syslog.target network-online.target postgresql.service mariadb.service car
 
 [Service]
 Type=notify
+Environment="ICINGA2_ERROR_LOG=/var/log/icinga2/error.log"
 EnvironmentFile=/etc/default/icinga2
 ExecStartPre=/usr/lib/icinga2/prepare-dirs /etc/default/icinga2
 ExecStart=/usr/sbin/icinga2 daemon --close-stdio -e ${ICINGA2_ERROR_LOG}
