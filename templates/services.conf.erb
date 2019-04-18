@@ -161,10 +161,10 @@ object Service "phabricator check dns" {
 
 object Service "gerrit-test3 check gerrit" {
       import "generic-service"
-      host_name = "gerrit-test3.git.eqiad.wmflabs"
+      host_name = "gerrit-test5.git.eqiad.wmflabs"
       check_command = "nrpe-check-1arg"
       vars.check = "check_gerrit"
-      vars.host = "gerrit-test3.git.eqiad.wmflabs"
+      vars.host = "gerrit-test5.git.eqiad.wmflabs"
 }
 
 object Service "phabricator check phd" {
