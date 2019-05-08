@@ -191,15 +191,15 @@ object Host "gerrit-jenkins.wmflabs.org" {
      }
 }
 
-object Host "jenkins-slave-01.git.eqiad.wmflabs" {
+object Host "jenkins-slave-02.git.eqiad.wmflabs" {
      import "generic-host"
-     address = "jenkins-slave-01.git.eqiad.wmflabs"
+     address = "jenkins-slave-02.git.eqiad.wmflabs"
      vars.os = "Linux OS"
      vars.sla = "24x7"
      vars.external_host = true
      vars.puppet_check = "enabled"
      vars.check_user = true
-     vars.host_name = "jenkins-slave-01.git.eqiad.wmflabs"
+     vars.host_name = "jenkins-slave-02.git.eqiad.wmflabs"
      vars.check_puppet = true
      vars.check_ram = true
      vars.check_disk = true
