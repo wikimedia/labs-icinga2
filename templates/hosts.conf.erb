@@ -330,6 +330,66 @@ object Host "ORES-worker02.experimental" {
     }
 }
 
+object Host "ORES-web04.Experimental" {
+    import "generic-host"
+
+    display_name = "ORES-web-04.Experimental"
+    address = "ores-web-04.ores.eqiad.wmflabs"
+    vars.os = "Linux OS"
+    vars.sla = "24x7"
+    vars.address = "ores-web-04.ores.eqiad.wmflabs"
+    vars.check_user = true
+    vars.check_disk = true
+    vars.host = "ores-web-04.ores.eqiad.wmflabs"
+    vars.notification.ores = true
+    vars.check_puppet = true
+
+    vars.notification["mail"] = {
+      /* The UserGroup `icingaadmins` is defined in `users.conf`. */
+      groups = [ "icingaadmins" ]
+    }
+}
+
+object Host "ORES-web05.Experimental" {
+    import "generic-host"
+
+    display_name = "ORES-web-05.Experimental"
+    address = "ores-web-05.ores.eqiad.wmflabs"
+    vars.os = "Linux OS"
+    vars.sla = "24x7"
+    vars.address = "ores-web-05.ores.eqiad.wmflabs"
+    vars.check_user = true
+    vars.check_disk = true
+    vars.host = "ores-web-05.ores.eqiad.wmflabs"
+    vars.notification.ores = true
+    vars.check_puppet = true
+
+    vars.notification["mail"] = {
+      /* The UserGroup `icingaadmins` is defined in `users.conf`. */
+      groups = [ "icingaadmins" ]
+    }
+}
+
+object Host "ORES-web06.Experimental" {
+    import "generic-host"
+
+    display_name = "ORES-web-06.Experimental"
+    address = "ores-web-06.ores.eqiad.wmflabs"
+    vars.os = "Linux OS"
+    vars.sla = "24x7"
+    vars.address = "ores-web-06.ores.eqiad.wmflabs"
+    vars.check_user = true
+    vars.check_disk = true
+    vars.host = "ores-web-06.ores.eqiad.wmflabs"
+    vars.notification.ores = true
+    vars.check_puppet = true
+
+    vars.notification["mail"] = {
+      /* The UserGroup `icingaadmins` is defined in `users.conf`. */
+      groups = [ "icingaadmins" ]
+    }
+}
+
 object Host "Experimental ORES Website" {
      import "generic-host"
 
