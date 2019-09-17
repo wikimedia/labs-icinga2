@@ -301,6 +301,7 @@ object Host "ORES-worker01.experimental" {
     vars.host = "ores-worker-01.ores.eqiad.wmflabs"
     vars.notification.ores = true
     vars.check_puppet = true
+    vars.load_check = "disable"
 
     /* Define notification mail attributes for notification apply rules in `notifications.conf`. */
     vars.notification["mail"] = {
@@ -322,6 +323,7 @@ object Host "ORES-worker02.experimental" {
     vars.host = "ores-worker-02.ores.eqiad.wmflabs"
     vars.notification.ores = true
     vars.check_puppet = true
+    vars.load_check = "disable"
 
     /* Define notification mail attributes for notification apply rules in `notifications.conf`. */
     vars.notification["mail"] = {
