@@ -159,12 +159,12 @@ object Service "phabricator check dns" {
       vars.address = "cloud-ns0.wikimedia.org"
 }
 
-object Service "gerrit-test5 check gerrit" {
+object Service "gerrit-test6 check gerrit" {
       import "generic-service"
-      host_name = "gerrit-test5.git.eqiad.wmflabs"
+      host_name = "gerrit-test6.git.eqiad.wmflabs"
       check_command = "nrpe-check-1arg"
       vars.check = "check_gerrit"
-      vars.host = "gerrit-test5.git.eqiad.wmflabs"
+      vars.host = "gerrit-test6.git.eqiad.wmflabs"
 }
 
 object Service "phabricator check phd" {
